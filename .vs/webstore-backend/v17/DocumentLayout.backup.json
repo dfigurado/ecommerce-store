@@ -1,0 +1,87 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Research\\Misc\\Angular.NET\\Project\\ecommerce-app\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C63E4945-FE55-411D-8524-AE2D8B325E28}|backend\\API\\API.csproj|c:\\research\\misc\\angular.net\\project\\ecommerce-app\\backend\\api\\api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{C63E4945-FE55-411D-8524-AE2D8B325E28}|backend\\API\\API.csproj|solutionrelative:backend\\api\\api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C63E4945-FE55-411D-8524-AE2D8B325E28}|backend\\API\\API.csproj|c:\\research\\misc\\angular.net\\project\\ecommerce-app\\backend\\api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{C63E4945-FE55-411D-8524-AE2D8B325E28}|backend\\API\\API.csproj|solutionrelative:backend\\api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C63E4945-FE55-411D-8524-AE2D8B325E28}|backend\\API\\API.csproj|c:\\research\\misc\\angular.net\\project\\ecommerce-app\\backend\\api\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C63E4945-FE55-411D-8524-AE2D8B325E28}|backend\\API\\API.csproj|solutionrelative:backend\\api\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "API",
+              "DocumentMoniker": "C:\\Research\\Misc\\Angular.NET\\Project\\ecommerce-app\\backend\\API\\API.csproj",
+              "RelativeDocumentMoniker": "backend\\API\\API.csproj",
+              "ToolTip": "C:\\Research\\Misc\\Angular.NET\\Project\\ecommerce-app\\backend\\API\\API.csproj",
+              "RelativeToolTip": "backend\\API\\API.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwMAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-08-04T09:15:20.508Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Research\\Misc\\Angular.NET\\Project\\ecommerce-app\\backend\\API\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "backend\\API\\appsettings.Development.json",
+              "ToolTip": "C:\\Research\\Misc\\Angular.NET\\Project\\ecommerce-app\\backend\\API\\appsettings.Development.json",
+              "RelativeToolTip": "backend\\API\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAABdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-08-04T09:06:10.421Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProductsController.cs",
+              "DocumentMoniker": "C:\\Research\\Misc\\Angular.NET\\Project\\ecommerce-app\\backend\\API\\Controllers\\ProductsController.cs",
+              "RelativeDocumentMoniker": "backend\\API\\Controllers\\ProductsController.cs",
+              "ToolTip": "C:\\Research\\Misc\\Angular.NET\\Project\\ecommerce-app\\backend\\API\\Controllers\\ProductsController.cs",
+              "RelativeToolTip": "backend\\API\\Controllers\\ProductsController.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAqwAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-04T09:06:02.811Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
