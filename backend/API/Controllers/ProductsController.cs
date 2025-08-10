@@ -87,15 +87,15 @@ namespace API.Controllers
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<string>>> GetBrands()
         {
-            // TODO: Implement this method to return a list of brands
-            return Ok();
+            var spec = new BrandListSpecification();
+            return Ok(await repo.ListAsync(spec));
         }
 
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<string>>> GetTypes()
         {
-            // TODO: Implement this method to return a list of types
-            return Ok();
+            var spec = new TypeListSpecification();
+            return Ok(await repo.ListAsync(spec));
         }
 
         private bool ProductExists(int id)
