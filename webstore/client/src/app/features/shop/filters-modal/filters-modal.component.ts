@@ -1,5 +1,4 @@
-import { Component, Inject } from '@angular/core';
-import {StoreService} from '../../../core/services/store.service';
+import { Component, inject } from '@angular/core';
 import {MatDivider} from '@angular/material/divider';
 import {MatListOption, MatSelectionList} from '@angular/material/list';
 import {MatButton} from '@angular/material/button';
@@ -19,10 +18,12 @@ import {FormsModule} from '@angular/forms';
   styleUrl: './filters-modal.component.scss'
 })
 export class FiltersModalComponent {
-  private dialogRef = Inject(MatDialogRef<FiltersModalComponent>);
-  data = Inject(MAT_DIALOG_DATA)
-  storeService = Inject(StoreService);
+  private dialogRef = inject(MatDialogRef<FiltersModalComponent>);
+  data = inject(MAT_DIALOG_DATA);
 
+  brands: string[] = this.data.brands;
+  types: string[] = this.data.types;
+  
   selectedBrands: string[] = this.data.selectedBrands;
   selectedTypes: string[] = this.data.selectedTypes;
 

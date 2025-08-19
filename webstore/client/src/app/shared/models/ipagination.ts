@@ -1,8 +1,6 @@
-export interface IPaggination<T> {
+export interface IPagination<T> {
     data: T[];
     pageIndex: number;
-    pageNumber: number;
     pageSize: number;
-    totalItems: number;
-    totalPages: number;
+    count: number;
 }
