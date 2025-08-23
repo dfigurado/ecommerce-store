@@ -43,6 +43,10 @@ export class StoreService {
     return this.http.get<IPagination<IProduct>>(this.baseUrl + "products", {params});
   }
 
+  getProduct(id: number) {
+    return this.http.get<IProduct>(this.baseUrl + "products/" + id);
+  }
+
   getBrands() {
     if (this.brandSubject.value.length > 0) return;
     return this.http.get<string[]>(this.baseUrl + "products/brands").subscribe({

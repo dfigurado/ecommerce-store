@@ -4,7 +4,7 @@ import { IProduct } from '../../shared/models/iproduct';
 import {ProductItemComponent} from './product-item/product-item.component';
 import {MatDialog} from '@angular/material/dialog';
 import {FiltersModalComponent} from './filters-modal/filters-modal.component';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
@@ -25,8 +25,9 @@ import { FormsModule } from '@angular/forms';
     MatMenuTrigger,
     MatMenu,
     MatPaginator,
-    FormsModule
-],
+    FormsModule,
+    MatIconButton
+  ],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.scss'
 })

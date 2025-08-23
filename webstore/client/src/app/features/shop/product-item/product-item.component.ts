@@ -1,9 +1,11 @@
 import { Component, Input } from '@angular/core';
 import {IProduct} from '../../../shared/models/iproduct';
-import {MatCard, MatCardActions, MatCardContent} from '@angular/material/card';
+import {MatCard, MatCardActions, MatCardContent, MatCardImage } from '@angular/material/card';
 import {CurrencyPipe} from '@angular/common';
 import {MatIcon} from '@angular/material/icon';
 import {MatButton} from '@angular/material/button';
+import {RouterLink} from '@angular/router';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-product-item',
@@ -14,11 +16,19 @@ import {MatButton} from '@angular/material/button';
     CurrencyPipe,
     MatCardActions,
     MatIcon,
-    MatButton
+    MatButton,
+    MatCardImage,
+    RouterLink,
+    NgOptimizedImage
   ],
   templateUrl: './product-item.component.html',
   styleUrl: './product-item.component.scss'
 })
 export class ProductItemComponent {
   @Input() product?: IProduct
+
+  onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    img.src = "/images/products/placeholder.png";
+  }
 }
