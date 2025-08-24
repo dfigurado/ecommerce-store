@@ -18,3 +18,19 @@ button.match-input-height {
 .mdc-notched-outline__notch {
   border-right-style: none !important;
 }
+
+.error-snackbar {
+  @include mat.snack-bar-overrides((
+    button-color: white,
+    container-color: red,
+    supporting-text-color: white,
+  ));
+}
+
+.success-snackbar {
+  @include mat.snack-bar-overrides((
+    button-color: white,
+    container-color: green,
+    supporting-text-color: white,
+  ));
+}
