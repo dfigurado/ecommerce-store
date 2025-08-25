@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { CartService } from './../../../core/services/cart.service';
+import { Component, Input, inject } from '@angular/core';
 import {IProduct} from '../../../shared/models/iproduct';
 import {MatCard, MatCardActions, MatCardContent, MatCardImage } from '@angular/material/card';
 import {CurrencyPipe} from '@angular/common';
@@ -26,6 +27,7 @@ import { NgOptimizedImage } from '@angular/common';
 })
 export class ProductItemComponent {
   @Input() product?: IProduct
+  cartService = inject(CartService);
 
   onImageError(event: Event): void {
     const img = event.target as HTMLImageElement;

@@ -4,13 +4,14 @@ import {IPagination} from '../../shared/models/ipagination';
 import {IProduct} from '../../shared/models/iproduct';
 import { BehaviorSubject } from 'rxjs';
 import { ShopParams } from '../../shared/models/shopparams';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class StoreService {
-  baseUrl = "http://localhost:5164/api/";
+  baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
   private brandSubject = new BehaviorSubject<string[]>([]);
   private typeSubject = new BehaviorSubject<string[]>([]);

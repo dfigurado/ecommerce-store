@@ -11,7 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "backend\I
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
 	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
 		.gitignore = .gitignore
+		docker-compose.yml = docker-compose.yml
+		global.json = global.json
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global
@@ -60,18 +64,6 @@ Global
 		{5077D82C-4EFE-41DA-A83E-AB7639E5A678}.Release|x64.Build.0 = Release|Any CPU
 		{5077D82C-4EFE-41DA-A83E-AB7639E5A678}.Release|x86.ActiveCfg = Release|Any CPU
 		{5077D82C-4EFE-41DA-A83E-AB7639E5A678}.Release|x86.Build.0 = Release|Any CPU
-		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|x64.Build.0 = Debug|Any CPU
-		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|x86.Build.0 = Debug|Any CPU
-		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|x64.ActiveCfg = Release|Any CPU
-		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|x64.Build.0 = Release|Any CPU
-		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|x86.ActiveCfg = Release|Any CPU
-		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

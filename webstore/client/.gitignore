@@ -43,3 +43,6 @@ Thumbs.db
 
 # Application specific
 /public/images/products/*.png
+*.vsidx
+*.dtbcache.v2
+*.futdcache.v2

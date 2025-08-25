@@ -5,7 +5,8 @@
         <div class="max-w-xl mx-auto">
           <img
             ngSrc="{{product.imageUrl}}"
-            height="768" width="768"
+            height="768" 
+            width="768"
             (error)="onImageError($event)"
             alt="{{product.name}}"
             class="w-full rounded-lg"
@@ -14,7 +15,7 @@
         <div class="max-w-xl mx-auto">
           <h1 class="text-2xl font-semibold text-gray-900">{{product.name}}</h1>
           <div class="mt-4 items-center gap-4 flex">
-            <p class="text-3xl font-extrabold text-gray-900">{{product.price | currency}}</p>
+            <p class="text-3xl font-extrabold text-gray-900">{{product.price | currency: 'GBP':true:'1.2-2'}}</p>
           </div>
           <div class="flex gap-4 mt-6">
             <button mat-flat-button class="match-input-height">

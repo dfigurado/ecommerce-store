@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { HeaderComponent } from "./layout/header/header.component";
 import { FooterComponent } from './layout/footer/footer.component';
-import { ShopComponent } from "./features/shop/shop.component";
 import {RouterOutlet} from '@angular/router';
 
 @Component({
