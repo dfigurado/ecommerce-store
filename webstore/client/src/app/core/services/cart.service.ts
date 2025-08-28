@@ -1,4 +1,4 @@
-import { IProduct } from './../../shared/models/iproduct';
+import { IProduct } from '../../shared/models/iproduct';
 import { inject, Injectable, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
@@ -47,13 +47,6 @@ export class CartService {
     });
   }
 
-  deleteCart(id: string) {
-    return this.http.delete(this.baseUrl + "cart?id=" + id).subscribe({
-      next: () => this.cart.set(null),
-      error: error => console.log(error)
-    });
-  }
-
   addItemToCart(item: CartItem | IProduct, quantity = 1) {
     const cart = this.cart() ?? this.createCart();
     if (this.isProduct(item)) {
@@ -63,19 +56,46 @@ export class CartService {
     this.setCart(cart);
   }
 
+  removeItemFromCart(productId: number, quantity: number = 1) {
+    const cart = this.cart();
+    if (!cart) return;
+    const index = cart.items.findIndex(i => i.productId === productId);
+    if (index !== -1) {
+      if (cart.items[index].quantity > quantity) {
+        cart.items[index].quantity -= quantity;
+      } else {
+        cart.items.splice(index, 1);
+      }
+      if (cart.items.length === 0) {
+        this.deleteCart();
+      } else {
+        this.setCart(cart);
+      }
+    }
+  }
+
+  deleteCart() {
+    this.http.delete(this.baseUrl + "cart?id=" + this.cart()?.id).subscribe({
+      next: () => {
+        localStorage.removeItem('cart_id');
+        this.cart.set(null);
+      }
+    })
+  }
+
   private addOrUpdateItem(items: CartItem[], item: CartItem, quantity: number) {
     const index = items.findIndex(i => i.productId === item.productId);
     if (index === -1) {
       item.quantity = quantity;
       items.push(item);
     } else {
-      items[index].quantity += quantity; 
+      items[index].quantity += quantity;
     }
 
     return items;
   }
 
-  private mapProductToCartItem(item: IProduct): CartItem { 
+  private mapProductToCartItem(item: IProduct): CartItem {
     return {
       productId: item.id,
       productName: item.name,
