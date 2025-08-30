@@ -2,10 +2,11 @@ using API.Middleware;
 using Infrastructure.Data;
 using Domain.Interfaces;
 using Infrastructure.Repository;
-
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
 using Infrastructure.Services;
+using Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,36 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 });
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddCors();
+builder.Services.ConfigureApplicationCookie(opt =>
+{
+    opt.Cookie.Name = ".AspNetCore.Identity.Application";
+    opt.Cookie.HttpOnly = true;
+    opt.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    opt.Cookie.SameSite = SameSiteMode.Strict;
+    opt.SlidingExpiration = true;
+    opt.ExpireTimeSpan = TimeSpan.FromHours(24);
+
+    opt.Events.OnRedirectToLogin = context =>
+    {
+        context.Response.StatusCode = 401;
+        return Task.CompletedTask;
+    };
+    opt.Events.OnRedirectToAccessDenied = context =>
+    {
+        context.Response.StatusCode = 403;
+        return Task.CompletedTask;
+    };
+});
+builder.Services.AddCors(option =>
+{
+    option.AddPolicy("ShopCors", policy =>
+    {
+        policy.WithOrigins("https://localhost:4200", "http://localhost:4200")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+    });
+});
 builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
 {
     var connString = builder.Configuration.GetConnectionString("Redis")
@@ -26,6 +56,9 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
     return ConnectionMultiplexer.Connect(configuration);
 });
 builder.Services.AddSingleton<ICartService, CartService>();
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<AppUser>()
+    .AddApiEndpoints().AddEntityFrameworkStores<StoreContext>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -34,10 +67,12 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionMiddleware>();
-app.UseCors(opt => opt.AllowAnyHeader().
-    AllowAnyMethod()
-    .WithOrigins("https://localhost:4200", "http://localhost:4200"));
-app.MapControllers();
+app.UseCors("ShopCors");
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers()
+    .RequireCors("ShopCors");
+app.MapGroup("api").MapIdentityApi<AppUser>();
 
 try
 {

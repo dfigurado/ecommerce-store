@@ -22,6 +22,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+obj
 
 # Uncomment if you have tasks that create the project's static files in wwwroot
 # wwwroot/
@@ -54,6 +55,7 @@ StyleCopReport.xml
 .*crunch*.local.xml
 
 # Visual Studio profiler
+.vs
 *.vsp
 *.vspx
 *.sap
@@ -115,3 +117,5 @@ secrets.json
 # Azure Functions local settings
 local.settings.json
 .fake
+
+.cr/
