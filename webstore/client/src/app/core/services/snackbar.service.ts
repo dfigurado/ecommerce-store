@@ -1,8 +1,8 @@
-import {inject, Injectable} from '@angular/core';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { inject, Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SnackbarService {
   private snackbar = inject(MatSnackBar);
@@ -12,8 +12,8 @@ export class SnackbarService {
       duration: 3000,
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      panelClass: ['error-snackbar']
-    })
+      panelClass: ['error-snackbar'],
+    });
   }
 
   success(message: string) {
@@ -21,7 +21,7 @@ export class SnackbarService {
       duration: 3000,
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      panelClass: ['success-snackbar']
-    })
+      panelClass: ['success-snackbar'],
+    });
   }
 }

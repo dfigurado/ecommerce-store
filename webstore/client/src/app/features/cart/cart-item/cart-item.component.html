@@ -31,7 +31,11 @@
         {{ item().productName }}
       </a>
       <div class="flex items-center gap-4">
-        <button mat-button class="flex gap-2 items-center text-red-800" (click)="removeItemFromCart()">
+        <button
+          mat-button
+          class="flex gap-2 items-center text-red-800"
+          (click)="removeItemFromCart()"
+        >
           <mat-icon>delete</mat-icon>
           <span>Delete</span>
         </button>

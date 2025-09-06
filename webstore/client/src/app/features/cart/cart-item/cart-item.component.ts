@@ -3,9 +3,9 @@ import { CartItem } from '../../../shared/models/shopping/cartitem';
 import { RouterLink } from '@angular/router';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { MatIconButton } from "@angular/material/button";
+import { MatIconButton } from '@angular/material/button';
 import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
-import {CartService} from '../../../core/services/cart.service';
+import { CartService } from '../../../core/services/cart.service';
 
 @Component({
   selector: 'app-cart-item',
@@ -15,10 +15,10 @@ import {CartService} from '../../../core/services/cart.service';
     MatIcon,
     MatIconButton,
     CurrencyPipe,
-    NgOptimizedImage
+    NgOptimizedImage,
   ],
   templateUrl: './cart-item.component.html',
-  styleUrl: './cart-item.component.scss'
+  styleUrl: './cart-item.component.scss',
 })
 export class CartItemComponent {
   cartService = inject(CartService);
@@ -26,7 +26,7 @@ export class CartItemComponent {
 
   onImageError(event: Event): void {
     const img = event.target as HTMLImageElement;
-    img.src = "/images/products/placeholder.png";
+    img.src = '/images/products/placeholder.png';
   }
 
   incrementQuantity() {
@@ -38,6 +38,9 @@ export class CartItemComponent {
   }
 
   removeItemFromCart() {
-    this.cartService.removeItemFromCart(this.item().productId, this.item().quantity)
+    this.cartService.removeItemFromCart(
+      this.item().productId,
+      this.item().quantity
+    );
   }
 }

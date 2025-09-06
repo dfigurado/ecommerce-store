@@ -1,8 +1,8 @@
-import {HttpErrorResponse, HttpInterceptorFn} from '@angular/common/http';
-import {inject} from '@angular/core';
-import {NavigationExtras, Router} from '@angular/router';
-import {catchError, throwError} from 'rxjs';
-import {SnackbarService} from '../services/snackbar.service';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
+import { catchError, throwError } from 'rxjs';
+import { SnackbarService } from '../services/snackbar.service';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
@@ -12,7 +12,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((err: HttpErrorResponse) => {
       if (err.status === 400) {
         if (err.error.errors) {
-          const modelStateErrors= [];
+          const modelStateErrors = [];
           for (const key in err.error.errors) {
             if (err.error.errors[key]) {
               modelStateErrors.push(err.error.errors[key]);
@@ -20,16 +20,16 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           }
           throw modelStateErrors.flat();
         } else {
-          snackbar.error(err.error.title || err.error)
+          snackbar.error(err.error.title || err.error);
         }
       }
 
       if (err.status === 401) {
-        snackbar.error(err.error.title || err.error)
+        snackbar.error(err.error.title || err.error);
       }
 
       if (err.status === 403) {
-        snackbar.error(err.error.title || err.error)
+        snackbar.error(err.error.title || err.error);
       }
 
       if (err.status === 404) {
@@ -37,10 +37,12 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       }
 
       if (err.status === 500) {
-        const navigationExtras: NavigationExtras = { state: { error: err.error }}
+        const navigationExtras: NavigationExtras = {
+          state: { error: err.error },
+        };
         router.navigateByUrl('/server-error', navigationExtras);
       }
-      return throwError(() => err)
+      return throwError(() => err);
     })
-  )
+  );
 };
