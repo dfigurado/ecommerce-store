@@ -1,5 +1,5 @@
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { CurrencyPipe, /*JsonPipe*/ } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
@@ -21,6 +21,7 @@ import { OrderSummaryComponent } from '../../shared/components/order-summary/ord
 import { IAddress } from '../../shared/models/iaddress';
 import { CheckoutDeliveryComponent } from "./checkout-delivery/checkout-delivery.component";
 import { CheckoutReviewComponent } from './checkout-review/checkout-review.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-checkout',
@@ -33,7 +34,7 @@ import { CheckoutReviewComponent } from './checkout-review/checkout-review.compo
     CheckoutDeliveryComponent,
     CheckoutReviewComponent,
     CurrencyPipe,
-    /*JsonPipe*/
+    MatProgressSpinnerModule
 ],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss',
@@ -46,6 +47,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   private stripeService = inject(StripeService);
   private accountService = inject(AccountService);
 
+  loading = false;
   saveAddress = false;
   paymentElememt?: StripePaymentElement;
   confirmationToken?: ConfirmationToken;
@@ -54,7 +56,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   completionStatus = signal<{ address: boolean, card: boolean, delivery: boolean }>(
     { address: false, card: false, delivery: false }
   );
-  
+
   async ngOnInit() {
     try {
       this.billingAddressElement = await this.stripeService.createAddressElement();
@@ -123,6 +125,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   async confirmPayment(stepper: MatStepper) {
+    this.loading = true;
     try {
       if (this.confirmationToken) {
         const result = await this.stripeService.confirmPayment(this.confirmationToken);
@@ -137,6 +140,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     } catch (error: any) {
       this.snackBar.error(error.message || 'Failure');
       stepper.previous();
+    } finally {
+      this.loading = false;
     }
   }
 
