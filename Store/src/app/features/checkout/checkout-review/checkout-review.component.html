@@ -1,0 +1,42 @@
+<div class="mt-4 w-full">
+  <h4 class="text-lg font-semibold">Billing and Delivery Information</h4>
+  <dl class="mt-4">
+    <dt class="font-medium">Shipping Address</dt>
+    <dt class="mt-1 text-gray-500">{{confirmationToken?.shipping | address}}</dt>
+    <dt class="mt-2 font-medium">Payment Details</dt>
+    <dt class="mt-1 text-gray-500">{{confirmationToken?.payment_method_preview | paymentCard }}</dt>
+  </dl>
+</div>
+
+<div class="mt-6 mx-auto">
+  <div class="border-b border-gray-200">
+    <table class="w-full text-center">
+       <tbody class="divide-y divide-gray-200">
+         @for (item of cartService.cart()?.items; track item.productId)
+         {
+           <tr>
+             <td class="py-4">
+               <div class="flex items-center gap-4">
+                 <img
+                    mat-card-image
+                    ngSrc="{{item.imageUrl}}"
+                    alt="{{item.productName}}"
+                    width="50"
+                    height="50"
+                    (error)="onImageError($event)"
+                 />
+                 <span>{{item.productName}}</span>
+               </div>
+             </td>
+             <td class="p-4">
+               x{{item.quantity}}
+             </td>
+             <td class="p-4 text-right">
+               {{item.price | currency: 'GBP' : 'symbol-narrow' : '1.2-2'}}
+             </td>
+           </tr>
+         }
+       </tbody>
+    </table>
+  </div>
+</div>

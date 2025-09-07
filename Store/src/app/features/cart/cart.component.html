@@ -1,0 +1,22 @@
+<section>
+  @if (cartService.cart()?.items?.length! > 0) {
+    <div class="flex w-full items-start gap-6 mt-32">
+      @if (cartService.cart()?.items?.length === 0 || !cartService.cart()) {
+        <div class="w-full text-center">
+          <p class="text-2xl font-semibold">Your cart is empty</p>
+        </div>
+      } @else {
+        <div class="w-3/4">
+          @for(item of cartService.cart()?.items; track item.productId) {
+          <app-cart-item [item]="item"></app-cart-item>
+          }
+        </div>
+        <div class="w-1/4">
+          <app-order-summary></app-order-summary>
+        </div>
+      }
+    </div>
+  } @else {
+    <app-empty-state></app-empty-state>
+  }
+</section>

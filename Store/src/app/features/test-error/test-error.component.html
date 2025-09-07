@@ -1,0 +1,18 @@
+<div class="mt-5 flex justify-center gap-4">
+  <button mat-stroked-button (click)="get400Error()">Test 400 error</button>
+  <button mat-stroked-button (click)="get401Error()">Test 401 error</button>
+  <button mat-stroked-button (click)="get403Error()">Test 403 error</button>
+  <button mat-stroked-button (click)="get404Error()">Test 404 error</button>
+  <button mat-stroked-button (click)="get500Error()">Test 500 error</button>
+  <button mat-stroked-button (click)="get400ValidationError()">Test validation error</button>
+</div>
+
+@if (validationErrors) {
+   <div class="mx-auto max-w-lg mt-5 border border-red-400 rounded bg-red-800">
+     <ul class="space-y-2 p-2">
+       @for (error of validationErrors; track $index) {
+         <li class="text-white">{{error}}</li>
+       }
+     </ul>
+   </div>
+}

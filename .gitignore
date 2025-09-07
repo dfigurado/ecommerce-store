@@ -68,7 +68,7 @@ $tf/
 *.sln.iml
 
 # Visual Studio Code
-.vscode/
+.vscode
 
 # Resharper
 _ReSharper*/
@@ -76,7 +76,6 @@ _ReSharper*/
 *.DotSettings.user
 
 # DotCover
-*.dotCover
 
 # NuGet
 *.nupkg
@@ -101,14 +100,12 @@ publish/
 *.tmp
 *.bak
 *.orig
-*.tmp
 
 # Secrets
 secrets.json
 
 # JetBrains Rider
-.idea/
-*.sln.iml
+.idea
 
 # Local DB files
 *.mdf
@@ -117,5 +114,6 @@ secrets.json
 # Azure Functions local settings
 local.settings.json
 .fake
-
 .cr/
+
+node_modules
