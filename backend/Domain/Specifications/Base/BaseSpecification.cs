@@ -11,10 +11,13 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecif
     public Expression<Func<T, bool>>? Criteria => criteria;
     public Expression<Func<T, object>>? OrderBy { get; private set; }
     public Expression<Func<T, object>>? OrderByDescending { get; private set; }
+    public List<Expression<Func<T, object>>> Includes { get; } = [];
+    public List<string> IncludeStrings { get; } = [];
     public bool IsDistinct { get; private set; }
     public int? Take { get; private set; }
     public int? Skip { get; private set; }
     public bool IsPagingEnabled { get; private set; }
+    
     public IQueryable<T> ApplyCriteria(IQueryable<T> query)
     {
         if (Criteria != null)
@@ -23,6 +26,16 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecif
         }
         
         return query;
+    }
+
+    protected void AddInclude(Expression<Func<T, object>> includeExpression)
+    {
+        Includes.Add(includeExpression);
+    }
+
+    protected void AddInclude(string includeString)
+    {
+        IncludeStrings.Add(includeString); // For string-based includes
     }
 
     protected void AddOrderBy(Expression<Func<T, object>> orderByExpression)

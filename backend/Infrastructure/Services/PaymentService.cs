@@ -2,14 +2,14 @@ using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Stripe;
+using Product = Domain.Entities.Product;
 
 namespace Infrastructure.Services
 {
     public class PaymentService (
         IConfiguration config,
         ICartService cartService,
-        IGenericRepository<Domain.Entities.Product> productRepo,
-        IGenericRepository<DeliveryMethod> deliveryMethodRepo) : IPaymentService
+        IUnitOfWork unitOfWork) : IPaymentService
     {
         public async Task<ShoppingCart?> CreateOrUpdatePaymentIntent(string cartId)
         {
@@ -23,7 +23,7 @@ namespace Infrastructure.Services
 
             if (cart.DeliveryMethodId.HasValue)
             {
-                var deliveryMethod = await deliveryMethodRepo.GetByIdAsync((int)cart.DeliveryMethodId);
+                var deliveryMethod = await unitOfWork.Repository<DeliveryMethod>().GetByIdAsync((int)cart.DeliveryMethodId);
 
                 if (deliveryMethod == null) return null;
 
@@ -34,7 +34,7 @@ namespace Infrastructure.Services
 
             foreach (var item in cart.Items)
             {
-                var productItem = await productRepo.GetByIdAsync(item.ProductId);
+                var productItem = await unitOfWork.Repository<Product>().GetByIdAsync(item.ProductId);
 
                 if (productItem == null) return null;
 
@@ -45,7 +45,6 @@ namespace Infrastructure.Services
             }
 
             var service = new PaymentIntentService();
-            PaymentIntent? intent = null;
 
             if (string.IsNullOrEmpty(cart.PaymentIntentId))
             {
@@ -55,7 +54,7 @@ namespace Infrastructure.Services
                     Currency = "gbp",
                     PaymentMethodTypes = ["card"]
                 };
-                intent = await service.CreateAsync(options);
+                var intent = await service.CreateAsync(options);
                 cart.PaymentIntentId = intent.Id;
                 cart.ClientSecret = intent.ClientSecret;
             }
@@ -65,7 +64,7 @@ namespace Infrastructure.Services
                 {
                     Amount = (long)cart.Items.Sum(x => x.Quantity * (x.Price * 100)) + (long)shippingPrice * 100
                 };
-                intent = await service.UpdateAsync(cart.PaymentIntentId, options);
+                _ = await service.UpdateAsync(cart.PaymentIntentId, options);
             }
 
             await cartService.SetCartAsync(cart);

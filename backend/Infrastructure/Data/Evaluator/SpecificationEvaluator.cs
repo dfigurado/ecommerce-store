@@ -1,5 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Infrastructure.Data.Evaluator;
 
@@ -31,6 +33,9 @@ public abstract class SpecificationEvaluator<T> where T : BaseEntity
         {
             query = query.Skip(spec.Skip ?? 0).Take(spec.Take ?? int.MaxValue);
         }
+
+        query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
+        query = spec.IncludeStrings.Aggregate(query, (current, include) => current.Include(include));
 
         return query;
     }
