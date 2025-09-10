@@ -1,14 +1,12 @@
 <div class="rounded-lg border border-gray-400 bg-white p-4 shadow-sm mb-4">
   <div class="flex items-center justify-between gap-6">
     <a routerLink="/shop/{{ item().productId }}" class="shrink order-1">
-      <img
-        ngSrc="{{ item().imageUrl }}"
-        width="80"
-        height="80"
-        alt="product image"
-        class="h-20 w-20"
-        (error)="onImageError($event)"
-      />
+      <img ngSrc="{{ item().imageUrl }}"
+           width="80"
+           height="80"
+           alt="product image"
+           class="h-20 w-20"
+           (error)="onImageError($event)" />
     </a>
     <div class="flex items-center justify-between order-3">
       <div class="flex items-center align-middle gap-3">
@@ -31,11 +29,9 @@
         {{ item().productName }}
       </a>
       <div class="flex items-center gap-4">
-        <button
-          mat-button
-          class="flex gap-2 items-center text-red-800"
-          (click)="removeItemFromCart()"
-        >
+        <button mat-button
+                class="flex gap-2 items-center text-red-800"
+                (click)="removeItemFromCart()">
           <mat-icon>delete</mat-icon>
           <span>Delete</span>
         </button>

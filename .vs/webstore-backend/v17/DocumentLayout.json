@@ -1,7 +1,20 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Research\\Misc\\Angular.NET\\Project\\ecommerce-app\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AA8ABBAD-F524-DC31-FF48-657BD22CFF57}|Store\\Store.esproj|c:\\research\\misc\\angular.net\\project\\ecommerce-app\\store\\src\\app\\features\\checkout\\checkout-succes\\checkout-succes.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AA8ABBAD-F524-DC31-FF48-657BD22CFF57}|Store\\Store.esproj|solutionrelative:store\\src\\app\\features\\checkout\\checkout-succes\\checkout-succes.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA8ABBAD-F524-DC31-FF48-657BD22CFF57}|Store\\Store.esproj|c:\\research\\misc\\angular.net\\project\\ecommerce-app\\store\\src\\app\\features\\checkout\\checkout-review\\checkout-review.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AA8ABBAD-F524-DC31-FF48-657BD22CFF57}|Store\\Store.esproj|solutionrelative:store\\src\\app\\features\\checkout\\checkout-review\\checkout-review.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA8ABBAD-F524-DC31-FF48-657BD22CFF57}|Store\\Store.esproj|c:\\research\\misc\\angular.net\\project\\ecommerce-app\\store\\src\\app\\features\\cart\\cart-item\\cart-item.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AA8ABBAD-F524-DC31-FF48-657BD22CFF57}|Store\\Store.esproj|solutionrelative:store\\src\\app\\features\\cart\\cart-item\\cart-item.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,6 +39,45 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "checkout-succes.component.html",
+              "DocumentMoniker": "C:\\Research\\Misc\\Angular.NET\\Project\\ecommerce-app\\Store\\src\\app\\features\\checkout\\checkout-succes\\checkout-succes.component.html",
+              "RelativeDocumentMoniker": "Store\\src\\app\\features\\checkout\\checkout-succes\\checkout-succes.component.html",
+              "ToolTip": "C:\\Research\\Misc\\Angular.NET\\Project\\ecommerce-app\\Store\\src\\app\\features\\checkout\\checkout-succes\\checkout-succes.component.html",
+              "RelativeToolTip": "Store\\src\\app\\features\\checkout\\checkout-succes\\checkout-succes.component.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-09-10T10:35:47.814Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "checkout-review.component.html",
+              "DocumentMoniker": "C:\\Research\\Misc\\Angular.NET\\Project\\ecommerce-app\\Store\\src\\app\\features\\checkout\\checkout-review\\checkout-review.component.html",
+              "RelativeDocumentMoniker": "Store\\src\\app\\features\\checkout\\checkout-review\\checkout-review.component.html",
+              "ToolTip": "C:\\Research\\Misc\\Angular.NET\\Project\\ecommerce-app\\Store\\src\\app\\features\\checkout\\checkout-review\\checkout-review.component.html",
+              "RelativeToolTip": "Store\\src\\app\\features\\checkout\\checkout-review\\checkout-review.component.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-09-10T10:33:57.8Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "cart-item.component.html",
+              "DocumentMoniker": "C:\\Research\\Misc\\Angular.NET\\Project\\ecommerce-app\\Store\\src\\app\\features\\cart\\cart-item\\cart-item.component.html",
+              "RelativeDocumentMoniker": "Store\\src\\app\\features\\cart\\cart-item\\cart-item.component.html",
+              "ToolTip": "C:\\Research\\Misc\\Angular.NET\\Project\\ecommerce-app\\Store\\src\\app\\features\\cart\\cart-item\\cart-item.component.html",
+              "RelativeToolTip": "Store\\src\\app\\features\\cart\\cart-item\\cart-item.component.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-09-10T10:33:29.768Z",
+              "EditorCaption": ""
             }
           ]
         }

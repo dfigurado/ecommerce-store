@@ -1,0 +1,93 @@
+@if (order) {
+<mat-card class="bg-white py-8 shadow-md border-y mx-w-screen-ld mx-auto">
+  <div class="w-full px-4">
+    <h2 class="text-2xl text-center font-semibold">Order summary for order #{{order.id}}</h2>
+    <div class="mt-8 py-3 border-t border-gray-200 flex gap-16">
+      <!-- Billing and delivery information -->
+      <div class="spacy-y-2">
+        <h4 class="text-lg font-semibold">Billing and delivery information</h4>
+        <dl>
+          <dt class="font-medium">Shipping address</dt>
+          <dd class="mt-1 font-light">Address goes here</dd>
+        </dl>
+        <dl>
+          <dt class="font-medium">Payment details</dt>
+          <dd class="mt-1 font-light">payment info goes here</dd>
+        </dl>
+      </div>
+      <!-- Order details -->
+      <div class="spacy-y-2">
+        <h4 class="text-lg font-semibold">Order details</h4>
+        <dl>
+          <dt class="font-semibold">Email address</dt>
+          <dd class="mt-1 font-light">{{ order.buyerEmail }}</dd>
+        </dl>
+        <dl>
+          <dt class="font-semibold">Order status</dt>
+          <dd class="mt-1 font-light">{{ order.orderStatus }}</dd>
+        </dl>
+        <dl>
+          <dt class="font-semibold">Order date</dt>
+          <dd class="mt-1 font-light">{{ order.orderDate | date: 'medium' }}</dd>
+        </dl>
+      </div>
+    </div>
+    <!-- Order items table -->
+    <div class="mt-8">
+      <div class="border-y border-gray-200">
+        <table class="w-full text-center">
+          <tbody class="divide-y divide-gray-200">
+            @for (item of order.orderItems; track item.productId)
+            {
+            <tr>
+              <td class="py-4">
+                <div class="flex items-center gap-4">
+                  <img mat-card-image
+                       ngSrc="{{item.imageUrl}}"
+                       alt="{{item.productName}}"
+                       width="50"
+                       height="50"
+                       (error)="onImageError($event)" />
+                  <span>{{item.productName}}</span>
+                </div>
+              </td>
+              <td class="p-4">
+                x{{item.quantity}}
+              </td>
+              <td class="p-4 text-right">
+                {{item.price | currency: 'GBP' : 'symbol-narrow' : '1.2-2'}}
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="space-y-4 rounded-lg border-y border-gray-200 p-4 bg-white shadow-sm">
+      <p class="text-xl font-semibold">Order Summary</p>
+      <div class="space-y-4">
+        <div class="space-y-2">
+          <dl class="flex items center justify-between gap-4">
+            <dt class="font-medium text-gray-500">Subtotal</dt>
+            <dd class="font-medium text-gray-900">{{order.subtotal | currency: 'GBP' : 'symbol-narrow' : '1.2-2' }}</dd>
+          </dl>
+          <!-- TODO: re-implement discounts
+          <dl class="flex items center justify-between gap-4">
+            <dt class="font-medium text-gray-500">Discount</dt>
+            <dd class="font-medium text-green-900">-{{cartService.totals()?.discount | currency: 'GBP' : 'symbol-narrow' : '1.2-2' }}</dd>
+          </dl>
+          -->
+          <dl class="flex items center justify-between gap-4">
+            <dt class="font-medium text-gray-500">Delivery</dt>
+            <dd class="font-medium text-gray-900">{{order.shippingPrice | currency: 'GBP' : 'symbol-narrow' : '1.2-2' }}</dd>
+          </dl>
+        </div>
+        <dl class="flex items center justify-between gap-4">
+          <dt class="font-medium text-gray-500">Total</dt>
+          <dd class="font-medium text-gray-900">{{order.total | currency: 'GBP' : 'symbol-narrow' : '1.2-2' }}</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</mat-card>
+}
