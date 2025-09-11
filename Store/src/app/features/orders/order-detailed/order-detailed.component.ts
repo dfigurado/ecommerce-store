@@ -1,9 +1,12 @@
-import {Component, inject, OnInit} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { OrderService } from '../../../core/services/order.service';
-import {ActivatedRoute} from '@angular/router';
-import {IOrder} from '../../../shared/models/order/iorder';
-import {MatCardModule} from '@angular/material/card';
-import {CurrencyPipe, DatePipe, NgOptimizedImage} from '@angular/common';
+import {ActivatedRoute, RouterLink} from '@angular/router';
+import { IOrder } from '../../../shared/models/order/iorder';
+import { MatCardModule } from '@angular/material/card';
+import { CurrencyPipe, DatePipe, NgOptimizedImage } from '@angular/common';
+import { AddressPipe } from '../../../shared/pipes/address-pipe';
+import { PaymenCardtPipe } from '../../../shared/pipes/payment-pipe';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-order-detailed',
@@ -11,11 +14,16 @@ import {CurrencyPipe, DatePipe, NgOptimizedImage} from '@angular/common';
     MatCardModule,
     DatePipe,
     CurrencyPipe,
-    NgOptimizedImage
+    AddressPipe,
+    PaymenCardtPipe,
+    NgOptimizedImage,
+    MatButton,
+    RouterLink
   ],
   templateUrl: './order-detailed.component.html',
   styleUrl: './order-detailed.component.scss'
 })
+
 export class OrderDetailedComponent implements OnInit {
   private orderService = inject(OrderService);
   private activatedRoute = inject(ActivatedRoute);

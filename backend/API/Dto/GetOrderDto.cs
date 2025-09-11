@@ -1,20 +1,21 @@
-﻿using Domain.Entities;
-using Domain.Entities.OrderAggregate;
+﻿using Domain.Entities.OrderAggregate;
 
-namespace API.Dto;
-
-public class GetOrderDto
+namespace API.Dto
 {
-    public int Id { get; set; }
-    public DateTime OrderDate { get; set; }
-    public string? BuyerEmail { get; set; }
-    public required ShippingAddress ShippingAddress { get; set; }
-    public required string DeliveryMethod { get; set; }
-    public decimal ShippingPrice { get; set; }
-    public required PaymentSummary PaymentSummary { get; set; }
-    public required List<OrderItemDto> OrderItems { get; set; }
-    public decimal Subtotal { get; set; }
-    public decimal Total { get; set; }
-    public required string Status { get; set; }
-    public string? PaymentIntentId { get; set; }
+    public class GetOrderDto
+    {
+        public int Id { get; set; }
+        public DateTime OrderDate { get; set; }
+        public string? BuyerEmail { get; set; }
+        public required ShippingAddress ShippingAddress { get; set; }
+        public required string DeliveryMethod { get; set; }
+        public decimal ShippingPrice { get; set; }
+        public required PaymentSummary PaymentSummary { get; set; }
+        public required List<OrderItemDto> OrderItems { get; set; }
+        public decimal Subtotal { get; set; }
+        public decimal Discount { get; set; }
+        public decimal Total { get; set; }
+        public required string Status { get; set; }
+        public string? PaymentIntentId { get; set; }
+    }
 }

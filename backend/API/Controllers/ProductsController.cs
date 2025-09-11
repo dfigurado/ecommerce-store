@@ -1,18 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Controllers.Base;
-using API.Helpers;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Specifications;
-using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {

@@ -19,13 +19,14 @@ public static class OrderMappingExtensions
             PaymentSummary = order.PaymentSummary,
             OrderItems = order.OrderItems.Select(item => item.ToDto()).ToList(),
             Subtotal = order.Subtotal,
-            Total =  Utils.GetTotal(order.Subtotal, order.DeliveryMethod.Price),
+            Discount = order.Discount,
+            Total = order.GetTotal(),
             Status = order.Status.ToString(),
             PaymentIntentId = order.PaymentIntentId
         };
     }
 
-    public static OrderItemDto ToDto(this OrderItem orderItem)
+    private static OrderItemDto ToDto(this OrderItem orderItem)
     {
         return new OrderItemDto
         {

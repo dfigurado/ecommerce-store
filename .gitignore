@@ -55,7 +55,7 @@ StyleCopReport.xml
 .*crunch*.local.xml
 
 # Visual Studio profiler
-.vs
+*.vs/*
 *.vsp
 *.vspx
 *.sap
@@ -80,7 +80,7 @@ _ReSharper*/
 # NuGet
 *.nupkg
 *.snupkg
-.nuget/
+*.nuget/
 packages/
 *.nuspec
 *.psmdcp
@@ -105,7 +105,7 @@ publish/
 secrets.json
 
 # JetBrains Rider
-.idea
+*.idea
 
 # Local DB files
 *.mdf
@@ -113,7 +113,9 @@ secrets.json
 
 # Azure Functions local settings
 local.settings.json
-.fake
-.cr/
+*.fake
+*.cr
 
-node_modules
+# Misc
+*.angular
+*.db
