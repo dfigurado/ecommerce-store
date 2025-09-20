@@ -1,12 +1,14 @@
 import { CartService } from './cart.service';
 import { inject, Injectable } from '@angular/core';
-import { forkJoin, of } from 'rxjs';
+import { forkJoin, of, tap } from 'rxjs';
 import { AccountService } from './account.service';
+import {SignalrService} from './signalr.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InitService {
+  private signalRService = inject(SignalrService);
   private cartService = inject(CartService);
   private accountService = inject(AccountService);
 
@@ -16,7 +18,11 @@ export class InitService {
 
     return forkJoin({
       cart: cart$,
-      user: this.accountService.getUserInfo()
+      user: this.accountService.getUserInfo().pipe(
+        tap(user => {
+          if (user) this.signalRService.createHubConnection();
+        })
+      )
     });
   }
 }

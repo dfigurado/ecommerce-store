@@ -1,4 +1,5 @@
 using API.Middleware;
+using API.SignalR;
 using Infrastructure.Data;
 using Domain.Interfaces;
 using Infrastructure.Repository;
@@ -60,9 +61,12 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
 });
 builder.Services.AddSingleton<ICartService, CartService>();
 builder.Services.AddAuthorization();
-builder.Services.AddIdentityApiEndpoints<AppUser>()
-    .AddApiEndpoints().AddEntityFrameworkStores<StoreContext>();
+builder.Services
+    .AddIdentityApiEndpoints<AppUser>()
+    .AddApiEndpoints()
+    .AddEntityFrameworkStores<StoreContext>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddSignalR();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -72,11 +76,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors("ShopCors");
+
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllers()
-    .RequireCors("ShopCors");
+
+app.MapControllers() .RequireCors("ShopCors");
 app.MapGroup("api").MapIdentityApi<AppUser>();
+app.MapHub<NotificationHub>("/hub/notifications");
 
 try
 {

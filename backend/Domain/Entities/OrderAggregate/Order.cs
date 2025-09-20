@@ -10,7 +10,7 @@
         public List<OrderItem> OrderItems { get; set; } = [];
         public decimal Subtotal { get; set; }
         public decimal Discount { get; set; }
-        public OrderStatus Status { get; set; } = OrderStatus.Pending;
+        public OrderStatus Status { get; set; }
         public required string? PaymentIntentId { get; set; }
     
         public decimal GetTotal()
