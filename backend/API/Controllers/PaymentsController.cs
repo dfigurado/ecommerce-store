@@ -68,35 +68,6 @@ public class PaymentsController(
             return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred.");
         }
     }
-    
-    private async Task<Order?> UpdateOrderPaymentStatus(PaymentIntent intent)
-    {
-        var spec = new OrderSpecification(intent.Id, true);
-        var order = await unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
-
-        if (order == null)
-        {
-            logger.LogWarning("No order found for payment intent {PaymentIntentId}", intent.Id);
-            return null;
-        }
-
-        var oderTotalInCents = (long)Math.Round(order.GetTotal() * 100, MidpointRounding.AwayFromZero);
-
-        if (oderTotalInCents != intent.Amount)
-        {
-            order.Status = OrderStatus.PaymentMismatch;
-        }
-        else
-        {
-            order.Status = OrderStatus.PaymentReceived;
-        }
-
-        await unitOfWork.Complete();
-
-        logger.LogInformation("Updated order {OrderId} status to {Status}", order.Id, order.Status);
-
-        return order;
-    }
 
     private async Task HandlePaymentIntentSucceeded(PaymentIntent intent)
     {
@@ -131,6 +102,35 @@ public class PaymentsController(
         {
             logger.LogInformation("No active connection found for user {Email}, notification not sent", order.BuyerEmail);
         }
+    }
+
+    private async Task<Order?> UpdateOrderPaymentStatus(PaymentIntent intent)
+    {
+        var spec = new OrderSpecification(intent.Id, true);
+        var order = await unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
+
+        if (order == null)
+        {
+            logger.LogWarning("No order found for payment intent {PaymentIntentId}", intent.Id);
+            return null;
+        }
+
+        var oderTotalInCents = (long)Math.Round(order.Subtotal * 100, MidpointRounding.AwayFromZero);
+
+        if (oderTotalInCents != intent.Amount)
+        {
+            order.Status = OrderStatus.PaymentMismatch;
+        }
+        else
+        {
+            order.Status = OrderStatus.PaymentReceived;
+        }
+
+        await unitOfWork.Complete();
+
+        logger.LogInformation("Updated order {OrderId} status to {Status}", order.Id, order.Status);
+
+        return order;
     }
 
     private Event ConstructStripeEvent(string json)
