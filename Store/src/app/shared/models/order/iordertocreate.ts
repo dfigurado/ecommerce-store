@@ -1,5 +1,5 @@
-﻿import {IShippingAddress} from './ishippingaddress';
-import {IPaymentSummary} from './ipaymentsummary';
+import { IPaymentSummary } from './ipaymentsummary';
+import { IShippingAddress } from './ishippingaddress';
 
 export interface IOrderToCreate {
   cartId: string

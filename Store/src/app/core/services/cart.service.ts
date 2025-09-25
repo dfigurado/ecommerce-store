@@ -1,11 +1,11 @@
-import { IProduct } from '../../shared/models/iproduct';
-import { inject, Injectable, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { map } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
+import { IDeliveryMethod } from '../../shared/models/ideliverymethod';
+import { IProduct } from '../../shared/models/iproduct';
 import { Cart } from '../../shared/models/shopping/cart';
 import { CartItem } from '../../shared/models/shopping/cartitem';
-import { map } from 'rxjs';
-import { IDeliveryMethod } from '../../shared/models/ideliverymethod';
 
 @Injectable({
   providedIn: 'root'

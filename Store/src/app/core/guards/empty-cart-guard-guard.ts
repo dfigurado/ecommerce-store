@@ -1,7 +1,7 @@
-import { inject,  } from '@angular/core';
+import { inject, } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { SnackbarService } from '../services/snackbar.service';
 import { CartService } from '../services/cart.service';
+import { SnackbarService } from '../services/snackbar.service';
 
 export const emptyCartGuardGuard: CanActivateFn = (route, state) => {
   const cartService = inject(CartService);

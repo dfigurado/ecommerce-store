@@ -1,7 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { HeaderComponent } from "./layout/header/header.component";
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from './layout/footer/footer.component';
-import {RouterOutlet} from '@angular/router';
+import { HeaderComponent } from "./layout/header/header.component";
 
 @Component({
   selector: 'app-root',

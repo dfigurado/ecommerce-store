@@ -1,12 +1,11 @@
-import { CartService } from './../../../core/services/cart.service';
+import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
-import {IProduct} from '../../../shared/models/iproduct';
-import {MatCard, MatCardActions, MatCardContent, MatCardImage } from '@angular/material/card';
-import {CurrencyPipe} from '@angular/common';
-import {MatIcon} from '@angular/material/icon';
-import {MatButton} from '@angular/material/button';
-import {RouterLink} from '@angular/router';
-import { NgOptimizedImage } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { MatCard, MatCardActions, MatCardContent, MatCardImage } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
+import { IProduct } from '../../../shared/models/iproduct';
+import { CartService } from './../../../core/services/cart.service';
 
 @Component({
   selector: 'app-product-item',

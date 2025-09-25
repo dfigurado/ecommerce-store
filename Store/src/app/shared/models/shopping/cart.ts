@@ -1,6 +1,6 @@
-import {CartType} from "./carttype";
+import { nanoid } from "nanoid";
 import { CartItem } from "./cartitem";
-import {nanoid} from "nanoid";
+import { CartType } from "./carttype";
 
 export class Cart implements CartType {
   id = nanoid();

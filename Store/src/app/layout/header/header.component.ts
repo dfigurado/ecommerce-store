@@ -1,14 +1,14 @@
-import {Component, inject} from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
-import { MatButton } from '@angular/material/button';
+import { Component, inject } from '@angular/core';
 import { MatBadge } from '@angular/material/badge';
-import {Router, RouterLink, RouterLinkActive} from '@angular/router';
-import {MatProgressBar} from '@angular/material/progress-bar';
-import {LoadingService} from '../../core/services/loading.service';
-import { CartService } from '../../core/services/cart.service';
-import { AccountService } from '../../core/services/account.service';
-import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { MatButton } from '@angular/material/button';
 import { MatDivider } from '@angular/material/divider';
+import { MatIcon } from '@angular/material/icon';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AccountService } from '../../core/services/account.service';
+import { CartService } from '../../core/services/cart.service';
+import { LoadingService } from '../../core/services/loading.service';
 
 
 @Component({

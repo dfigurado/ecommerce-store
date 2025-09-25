@@ -17,11 +17,27 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
               @for (order of orders; track order.id) {
-                <tr routerLink="/orders/{{order.id}}" class="hover:bg-gray-100">
+                <tr class="hover:bg-gray-100">
                   <th class="px-6 py-3"># {{order.id}}</th>
                   <td>{{ order.orderDate | date: 'medium'}}</td>
                   <td>{{ order.total |  currency: 'GBP' : 'symbol-narrow' : '1.2-2' }}</td>
                   <td>{{ order.orderStatus }}</td>
+                  <td>
+                    <button
+                      mat-icon-button
+                      routerLink="/orders/{{order.id}}"
+                    >
+                      <mat-icon>chevron_right</mat-icon>
+                    </button>
+                  </td>
+                  <td>
+                    <button mat-icon-button
+                            class="flex gap-2 items-center text-red-800"
+                            (click)="removeOrder(order.id)"
+                    >
+                      <mat-icon>delete icon</mat-icon>
+                    </button>
+                  </td>
                 </tr>
               }
             </tbody>

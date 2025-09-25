@@ -1,8 +1,8 @@
-import { inject, Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { IDeliveryMethod } from '../../shared/models/ideliverymethod';
+import { inject, Injectable } from '@angular/core';
 import { map, of } from 'rxjs';
+import { environment } from '../../../environments/environment.development';
+import { IDeliveryMethod } from '../../shared/models/ideliverymethod';
 
 @Injectable({
   providedIn: 'root'

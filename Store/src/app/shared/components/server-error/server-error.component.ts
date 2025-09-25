@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import {HttpErrorResponse} from '@angular/common/http';
-import {Router} from '@angular/router';
-import {MatCard} from '@angular/material/card';
+import { MatCard } from '@angular/material/card';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-server-error',

@@ -18,7 +18,7 @@ public class PaymentsController(
     IUnitOfWork unitOfWork,
     ILogger<PaymentsController> logger, 
     IConfiguration config,
-    IHubContext<NotificationHub> notificationHubContext): BaseApiController
+    IHubContext<NotificationsHub> notificationHubContext): BaseApiController
 {
     private readonly string _whSecret = config["StripeSettings:WhSecret"]!;
     
@@ -40,7 +40,7 @@ public class PaymentsController(
     }
 
     [HttpPost("webhook")]
-    public async Task<IActionResult> StripeWebhook()
+    public async Task<IActionResult> StripeWebHook()
     {
         var json = await new StreamReader(Request.Body).ReadToEndAsync();
 
@@ -68,26 +68,68 @@ public class PaymentsController(
             return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred.");
         }
     }
+    
+    private async Task<Order?> UpdateOrderPaymentStatus(PaymentIntent intent)
+    {
+        var spec = new OrderSpecification(intent.Id, true);
+        var order = await unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
+
+        if (order == null)
+        {
+            logger.LogWarning("No order found for payment intent {PaymentIntentId}", intent.Id);
+            return null;
+        }
+
+        var oderTotalInCents = (long)Math.Round(order.GetTotal() * 100, MidpointRounding.AwayFromZero);
+
+        if (oderTotalInCents != intent.Amount)
+        {
+            order.Status = OrderStatus.PaymentMismatch;
+        }
+        else
+        {
+            order.Status = OrderStatus.PaymentReceived;
+        }
+
+        await unitOfWork.Complete();
+
+        logger.LogInformation("Updated order {OrderId} status to {Status}", order.Id, order.Status);
+
+        return order;
+    }
 
     private async Task HandlePaymentIntentSucceeded(PaymentIntent intent)
     {
         if (intent.Status != "succeeded")
         {
-            var spec = new OrderSpecification(intent.Id, true);
-            var order = await unitOfWork.Repository<Order>().GetEntityWithSpec(spec) 
-                        ?? throw new Exception("Order not found");
+            logger.LogWarning("Payment intent {PaymentIntentId} has status {Status}, skipping processing", 
+                intent.Id, intent.Status);
+            return;
+        }
 
-            order.Status = (long)order.GetTotal() * 100 != intent.Amount ? OrderStatus.PaymentMismatch : OrderStatus.PaymentReceived;
-            
-            await unitOfWork.Complete();
+        var order = await UpdateOrderPaymentStatus(intent);
+    
+        if (order == null)
+        {
+            logger.LogWarning("Order not found for payment intent {PaymentIntentId}. This could be a duplicate webhook or orphaned payment.", 
+                intent.Id);
+            return; // Don't throw - webhook should still return 200 OK
+        }
 
-            var connectionId = NotificationHub.GetConnectionIdByEmail(order.BuyerEmail);
+        logger.LogInformation("Order {OrderId} payment completed successfully", order.Id);
 
-            if (!string.IsNullOrEmpty(connectionId))
-            {
-                await notificationHubContext.Clients.Client(connectionId)
-                    .SendAsync("OrderCompleteNotification", order.ToDto());
-            }
+        var connectionId = NotificationsHub.GetConnectionIdByEmail(order.BuyerEmail);
+
+        if (!string.IsNullOrEmpty(connectionId))
+        {
+            await notificationHubContext.Clients.Client(connectionId)
+                .SendAsync("OrderCompletionNotification", order.ToDto());
+        
+            logger.LogInformation("Sent order completion notification to user {Email}", order.BuyerEmail);
+        }
+        else
+        {
+            logger.LogInformation("No active connection found for user {Email}, notification not sent", order.BuyerEmail);
         }
     }
 
@@ -95,7 +137,8 @@ public class PaymentsController(
     {
         try
         {
-            return EventUtility.ConstructEvent(json, Request.Headers["Stripe-Signature"], _whSecret);
+            var ent = EventUtility.ConstructEvent(json, Request.Headers["Stripe-Signature"], _whSecret);
+            return ent;
         }
         catch (Exception ex)
         {

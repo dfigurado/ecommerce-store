@@ -1,15 +1,14 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {StoreService} from '../../../core/services/store.service';
-import {ActivatedRoute} from '@angular/router';
-import {IProduct} from '../../../shared/models/iproduct';
-import {MatButton} from '@angular/material/button';
-import {CurrencyPipe} from '@angular/common';
-import {MatIcon} from '@angular/material/icon';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {MatDivider} from '@angular/material/divider';
-import {NgOptimizedImage} from '@angular/common';
-import { CartService } from '../../../core/services/cart.service';
+import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatDivider } from '@angular/material/divider';
+import { MatIcon } from '@angular/material/icon';
+import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { ActivatedRoute } from '@angular/router';
+import { CartService } from '../../../core/services/cart.service';
+import { StoreService } from '../../../core/services/store.service';
+import { IProduct } from '../../../shared/models/iproduct';
 
 @Component({
   selector: 'app-product-details',

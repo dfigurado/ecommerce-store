@@ -1,6 +1,6 @@
-import {Component, inject} from '@angular/core';
-import {MatButton} from '@angular/material/button';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { Component, inject } from '@angular/core';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-test-error',

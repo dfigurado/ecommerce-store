@@ -21,34 +21,34 @@ public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork) 
         
         if (cart == null) return BadRequest("Cart not found");
         if (cart.PaymentIntentId == null) return BadRequest("No payment intent found");
-        
+
         var items = new List<OrderItem>();
 
-        foreach (var item in cart.Items)
+        foreach (var item in cart.Items!)
         {
             var productItem = await unitOfWork.Repository<Domain.Entities.Product>().GetByIdAsync(item.ProductId);
-            
-             if (productItem == null) return BadRequest("Product not found"); 
-             
+
+             if (productItem == null) return BadRequest("Product not found");
+
              var itemOrdered = new ProductItemOrdered
              {
                  ProductId = productItem.Id,
                  ProductName = productItem.Name,
                  ImageUrl = productItem.ImageUrl
              };
-             
+
              var orderItem = new OrderItem
              {
                  ItemOrdered = itemOrdered,
                  UnitPrice = productItem.Price,
                  Quantity = item.Quantity
              };
-             
+
              items.Add(orderItem);
         }
         
         var deliveryMethod = await unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(orderDto.DeliveryMethodId);
-        
+
         if (deliveryMethod == null) return BadRequest("Delivery method not found");
 
         var order = new Order
@@ -61,14 +61,14 @@ public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork) 
             PaymentSummary = orderDto.PaymentSummary,
             BuyerEmail = email
         };
-        
+
         unitOfWork.Repository<Order>().Add(order);
-        
+
         if (await unitOfWork.Complete())
         {
             return CreatedAtAction("GetOrder", new { id = order.Id }, order);
         }
-        
+
         return BadRequest("Failed to create order");
     }
 
@@ -91,5 +91,26 @@ public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork) 
         if (order == null) return NotFound();
         
         return Ok(order.ToDto());
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<IReadOnlyList<GetOrderDto>>> DeleteOrder(int id)
+    {
+        var spec = new OrderSpecification(HttpContext.User.GetEmail(), id);
+        var result = await unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
+        
+        if (result == null) return NotFound();
+        
+        unitOfWork.Repository<Order>().Delete(result);
+
+        if (!await unitOfWork.Complete()) return BadRequest("Failed to delete order");
+        
+        // Retrieve a new list of orders after deletion
+        var specTwo = new OrderSpecification(HttpContext.User.GetEmail());
+        var orders = await unitOfWork.Repository<Order>().ListAsync(specTwo);
+        var ordersToReturn = orders.Select(order => order.ToDto()).ToList();
+
+        return Ok(ordersToReturn);
+
     }
 }

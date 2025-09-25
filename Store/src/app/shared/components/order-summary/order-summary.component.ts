@@ -1,9 +1,9 @@
-import { inject, Component } from '@angular/core';
+import { CurrencyPipe, Location } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../../core/services/cart.service';
-import {CurrencyPipe, Location} from '@angular/common';
 
 @Component({
   selector: 'app-order-summary',

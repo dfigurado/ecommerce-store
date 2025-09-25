@@ -1,8 +1,8 @@
-import { Component, inject, Input } from '@angular/core';
-import { CartService } from '../../../core/services/cart.service';
 import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
+import { Component, inject, Input } from '@angular/core';
 import { MatCardImage } from '@angular/material/card';
 import { ConfirmationToken } from '@stripe/stripe-js';
+import { CartService } from '../../../core/services/cart.service';
 import { AddressPipe } from '../../../shared/pipes/address-pipe';
 import { PaymenCardtPipe } from '../../../shared/pipes/payment-pipe';
 

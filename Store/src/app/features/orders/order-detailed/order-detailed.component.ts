@@ -1,12 +1,12 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { OrderService } from '../../../core/services/order.service';
-import {ActivatedRoute, RouterLink} from '@angular/router';
-import { IOrder } from '../../../shared/models/order/iorder';
-import { MatCardModule } from '@angular/material/card';
 import { CurrencyPipe, DatePipe, NgOptimizedImage } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { MatButton } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { OrderService } from '../../../core/services/order.service';
+import { IOrder } from '../../../shared/models/order/iorder';
 import { AddressPipe } from '../../../shared/pipes/address-pipe';
 import { PaymenCardtPipe } from '../../../shared/pipes/payment-pipe';
-import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-order-detailed',

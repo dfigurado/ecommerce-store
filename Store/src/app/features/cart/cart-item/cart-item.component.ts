@@ -1,11 +1,10 @@
-import { inject, Component, input } from '@angular/core';
-import { CartItem } from '../../../shared/models/shopping/cartitem';
-import { RouterLink } from '@angular/router';
-import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-import { MatIconButton } from '@angular/material/button';
 import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
+import { Component, inject, input } from '@angular/core';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 import { CartService } from '../../../core/services/cart.service';
+import { CartItem } from '../../../shared/models/shopping/cartitem';
 
 @Component({
   selector: 'app-cart-item',

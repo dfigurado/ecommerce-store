@@ -1,17 +1,17 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { StoreService } from '../../core/services/store.service';
-import { IProduct } from '../../shared/models/iproduct';
-import {ProductItemComponent} from './product-item/product-item.component';
-import {MatDialog} from '@angular/material/dialog';
-import {FiltersModalComponent} from './filters-modal/filters-modal.component';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
-import { ShopParams } from '../../shared/models/shopparams';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { StoreService } from '../../core/services/store.service';
 import { IPagination } from '../../shared/models/ipagination';
-import { FormsModule } from '@angular/forms';
+import { IProduct } from '../../shared/models/iproduct';
+import { ShopParams } from '../../shared/models/shopparams';
+import { FiltersModalComponent } from './filters-modal/filters-modal.component';
+import { ProductItemComponent } from './product-item/product-item.component';
 
 @Component({
   selector: 'app-shop',

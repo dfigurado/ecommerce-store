@@ -1,30 +1,30 @@
-import {StepperSelectionEvent} from '@angular/cdk/stepper';
-import {CurrencyPipe} from '@angular/common';
-import {Component, inject, OnDestroy, OnInit, signal} from '@angular/core';
-import {MatButton} from '@angular/material/button';
-import {MatCheckboxChange, MatCheckboxModule} from '@angular/material/checkbox';
-import {MatStepper, MatStepperModule} from '@angular/material/stepper';
-import {Router, RouterLink} from '@angular/router';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { CurrencyPipe } from '@angular/common';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { MatButton } from '@angular/material/button';
+import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
+import { Router, RouterLink } from '@angular/router';
 import {
-  ConfirmationToken,
-  StripeAddressElement,
-  StripeAddressElementChangeEvent,
-  StripePaymentElement,
-  StripePaymentElementChangeEvent
+    ConfirmationToken,
+    StripeAddressElement,
+    StripeAddressElementChangeEvent,
+    StripePaymentElement,
+    StripePaymentElementChangeEvent
 } from '@stripe/stripe-js';
-import {firstValueFrom} from 'rxjs';
-import {AccountService} from '../../core/services/account.service';
-import {CartService} from '../../core/services/cart.service';
-import {SnackbarService} from '../../core/services/snackbar.service';
-import {StripeService} from '../../core/services/stripe.service';
-import {OrderSummaryComponent} from '../../shared/components/order-summary/order-summary.component';
-import {IAddress} from '../../shared/models/iaddress';
-import {CheckoutDeliveryComponent} from "./checkout-delivery/checkout-delivery.component";
-import {CheckoutReviewComponent} from './checkout-review/checkout-review.component';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {IShippingAddress} from '../../shared/models/order/ishippingaddress';
-import {IOrderToCreate} from '../../shared/models/order/iordertocreate';
-import {OrderService} from '../../core/services/order.service';
+import { firstValueFrom } from 'rxjs';
+import { AccountService } from '../../core/services/account.service';
+import { CartService } from '../../core/services/cart.service';
+import { OrderService } from '../../core/services/order.service';
+import { SnackbarService } from '../../core/services/snackbar.service';
+import { StripeService } from '../../core/services/stripe.service';
+import { OrderSummaryComponent } from '../../shared/components/order-summary/order-summary.component';
+import { IAddress } from '../../shared/models/iaddress';
+import { IOrderToCreate } from '../../shared/models/order/iordertocreate';
+import { IShippingAddress } from '../../shared/models/order/ishippingaddress';
+import { CheckoutDeliveryComponent } from "./checkout-delivery/checkout-delivery.component";
+import { CheckoutReviewComponent } from './checkout-review/checkout-review.component';
 
 @Component({
   selector: 'app-checkout',
@@ -148,9 +148,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           if (!orderResult) {
             throw new Error('Order creation failed');
           } else {
+            this.orderService.orderComplete = true;
             this.cartService.deleteCart();
             this.cartService.selectedDelivery.set(null);
-            this.router.navigateByUrl('checkout/success');
+            this.router.navigateByUrl('/checkout/success');
           }
         } else if (result.error) {
           throw new Error(result.error.message);

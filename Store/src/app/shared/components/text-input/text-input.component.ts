@@ -1,6 +1,6 @@
-import {Component, Input, Self} from '@angular/core';
-import {ControlValueAccessor, FormControl, NgControl, ReactiveFormsModule} from '@angular/forms';
-import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import { Component, Input, Self } from '@angular/core';
+import { ControlValueAccessor, FormControl, NgControl, ReactiveFormsModule } from '@angular/forms';
+import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 
 @Component({
   selector: 'app-text-input',

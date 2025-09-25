@@ -27,7 +27,7 @@ builder.Services.ConfigureApplicationCookie(opt =>
     opt.Cookie.Name = ".AspNetCore.Identity.Application";
     opt.Cookie.HttpOnly = true;
     opt.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-    opt.Cookie.SameSite = SameSiteMode.Strict;
+    opt.Cookie.SameSite = SameSiteMode.None; // Allow cross-site cookies for SPA on different origin
     opt.SlidingExpiration = true;
     opt.ExpireTimeSpan = TimeSpan.FromHours(24);
 
@@ -44,14 +44,19 @@ builder.Services.ConfigureApplicationCookie(opt =>
 });
 builder.Services.AddCors(option =>
 {
-    option.AddPolicy("ShopCors", policy =>
-    {
-        policy.WithOrigins("https://localhost:4200", "http://localhost:4200")
+    option.AddPolicy("ShopCors", 
+        policy => 
+        {
+            policy.WithOrigins(
+                "https://localhost:4200", 
+                "http://localhost:4200"
+            )
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials();
-    });
+        });
 });
+builder.Services.AddSignalR();
 builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
 {
     var connString = builder.Configuration.GetConnectionString("Redis")
@@ -66,7 +71,6 @@ builder.Services
     .AddApiEndpoints()
     .AddEntityFrameworkStores<StoreContext>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
-builder.Services.AddSignalR();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -76,13 +80,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors("ShopCors");
+app.MapHub<NotificationsHub>("/hub/notifications");
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers() .RequireCors("ShopCors");
+app.MapControllers();
 app.MapGroup("api").MapIdentityApi<AppUser>();
-app.MapHub<NotificationHub>("/hub/notifications");
 
 try
 {

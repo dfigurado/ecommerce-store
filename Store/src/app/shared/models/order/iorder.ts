@@ -1,6 +1,6 @@
-﻿import { IShippingAddress } from './ishippingaddress';
-import { IPaymentSummary } from './ipaymentsummary';
 import { IOrderItem } from './iorderitem';
+import { IPaymentSummary } from './ipaymentsummary';
+import { IShippingAddress } from './ishippingaddress';
 
 export interface IOrder {
   id: number

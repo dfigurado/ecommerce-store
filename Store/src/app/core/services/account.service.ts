@@ -1,10 +1,10 @@
-import { IUser } from '../../shared/models/iuser';
-import { inject, Injectable, signal } from '@angular/core';
-import { environment } from '../../../environments/environment.development';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { IAddress } from '../../shared/models/iaddress';
+import { inject, Injectable, signal } from '@angular/core';
 import { map, tap } from 'rxjs';
-import {SignalrService} from './signalr.service';
+import { environment } from '../../../environments/environment.development';
+import { IAddress } from '../../shared/models/iaddress';
+import { IUser } from '../../shared/models/iuser';
+import { SignalrService } from './signalr.service';
 
 @Injectable({
   providedIn: 'root'

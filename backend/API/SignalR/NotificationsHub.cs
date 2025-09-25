@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.SignalR;
 namespace API.SignalR;
 
 [Authorize]
-public class NotificationHub : Hub
+public class NotificationsHub : Hub
 {
     private static readonly ConcurrentDictionary<string, string> UserConnections = new();
 

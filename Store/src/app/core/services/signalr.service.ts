@@ -1,37 +1,49 @@
-import {Injectable, signal} from '@angular/core';
-import {environment} from '../../../environments/environment';
-import {HubConnection, HubConnectionBuilder} from '@microsoft/signalr';
-import {IOrder} from '../../shared/models/order/iorder';
-import {HubConnectionState} from '@microsoft/signalr/dist/esm/HubConnection';
+import { Injectable, signal } from '@angular/core';
+import { HubConnection, HubConnectionBuilder, HubConnectionState, LogLevel } from '@microsoft/signalr';
+import { environment } from '../../../environments/environment';
+import { IOrder } from '../../shared/models/order/iorder';
 
 @Injectable({
-  providedIn: 'root'
+   providedIn: 'root'
 })
 export class SignalrService {
-   hubUrl = environment.hubUrl;
-   hubConnection?: HubConnection;
-   orderSignal = signal<IOrder | null>(null);
+  hubUrl = environment.hubUrl;
+  hubConnection?: HubConnection;
+  orderSignal = signal<IOrder | null>(null);
 
-   createHubConnection() {
-     this.hubConnection = new HubConnectionBuilder()
-       .withUrl(this.hubUrl, { withCredentials: true })
-       .withAutomaticReconnect()
-       .build();
+  createHubConnection() {
+    // Avoid creating multiple connections
+    if (this.hubConnection && this.hubConnection.state !== HubConnectionState.Disconnected) return;
 
-     this.hubConnection
-       .start()
-       .then(() => console.log('SignalR Connection Started'))
-       .catch(err => console.error('Error establishing SignalR connection: ' + err));
+    this.hubConnection = new HubConnectionBuilder()
+      .withUrl(this.hubUrl, {
+        withCredentials: true
+      })
+      .withAutomaticReconnect()
+      .configureLogging(LogLevel.Information)
+      .build();
 
-     this.hubConnection.on("OrderCompleteNotification", (order: IOrder) => {
-       console.log(`Order: ${order}`);
-       this.orderSignal.set(order);
-     });
-   }
+    this.hubConnection.start()
+      .then(() => console.log('✅ SignalR Connected Started'))
+      .catch(error => console.log('❌ Error establishing connection: ', error));
 
-   stopHubConnection() {
-      if (this.hubConnection?.state === HubConnectionState.Connected) {
-        this.hubConnection.stop().catch(err => console.error(err));
-      }
-   }
+    // Register handlers before start to catch early messages
+    this.hubConnection.on('OrderCompletionNotification', (order: IOrder) => {
+      console.log('📩 OrderCompletionNotification', order);
+      this.orderSignal.set(order);
+    });
+  }
+
+  stopHubConnection() {
+    if (!this.hubConnection) return;
+
+    // Remove handlers to avoid queued callbacks on a closed connection
+    this.hubConnection.off('OrderCompletionNotification');
+
+    if (this.hubConnection.state !== HubConnectionState.Disconnected) {
+      this.hubConnection.stop()
+        .then(() => console.log('🛑 SignalR Connection Stopped'))
+        .catch(error => console.log('❌ Error stopping connection: ', error));
+    }
+  }
 }

@@ -1,8 +1,8 @@
-import { Component, inject, OnInit, output } from '@angular/core';
-import { CheckoutService } from '../../../core/services/checkout.service';
-import { MatRadioModule } from '@angular/material/radio';
 import { CurrencyPipe } from '@angular/common';
+import { Component, inject, OnInit, output } from '@angular/core';
+import { MatRadioModule } from '@angular/material/radio';
 import { CartService } from '../../../core/services/cart.service';
+import { CheckoutService } from '../../../core/services/checkout.service';
 import { IDeliveryMethod } from '../../../shared/models/ideliverymethod';
 
 @Component({
