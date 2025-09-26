@@ -1,3 +1,4 @@
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {
     ApplicationConfig,
     inject,
@@ -6,10 +7,9 @@ import {
     provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { lastValueFrom } from 'rxjs';
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
@@ -27,7 +27,7 @@ export const appConfig: ApplicationConfig = {
       loadingInterceptor,
       authInterceptor
     ])),
-    provideAnimationsAsync(),
+    provideAnimations(),
     provideAppInitializer(async () => {
       const initService = inject(InitService);
       return lastValueFrom(initService.init()).finally(() => {
