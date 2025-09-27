@@ -32,7 +32,7 @@ jobs:
 
       - name: Install deps and build angular app
         run: |
-          cd client
+          cd Store
           npm Install
           ng build
 
