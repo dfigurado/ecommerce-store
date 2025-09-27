@@ -21,6 +21,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        
+      - name: Set up node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli@20
+
+      - name: Install deps and build angular app
+        run: |
+          cd client
+          npm Install
+          ng build
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
@@ -42,9 +56,11 @@ jobs:
   deploy:
     runs-on: windows-latest
     needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp.url }}
     permissions:
       id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
 
     steps:
       - name: Download artifact from build job
@@ -66,6 +82,3 @@ jobs:
           app-name: 'webstore-demo'
           slot-name: 'Production'
           package: .
-
-          
-
