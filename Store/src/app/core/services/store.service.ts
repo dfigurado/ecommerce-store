@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { IPagination } from '../../shared/models/ipagination';
 import { IProduct } from '../../shared/models/iproduct';
 import { ShopParams } from '../../shared/models/shopparams';

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { map } from 'rxjs';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { IDeliveryMethod } from '../../shared/models/ideliverymethod';
 import { IProduct } from '../../shared/models/iproduct';
 import { Cart } from '../../shared/models/shopping/cart';
