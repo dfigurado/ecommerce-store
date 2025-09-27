@@ -33,7 +33,7 @@ jobs:
       - name: Install deps and build angular app
         run: |
           cd Store
-          npm Install
+          npm install
           ng build
 
       - name: Set up .NET Core
