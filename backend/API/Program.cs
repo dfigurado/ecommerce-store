@@ -49,8 +49,7 @@ builder.Services.AddCors(option =>
         {
             policy.WithOrigins(
                 "https://localhost:4200", 
-                "http://localhost:4200",
-                "https://webstore-demo-cwc3hnf2bxcshkap.southeastasia-01.azurewebsites.net"
+                "http://localhost:4200"
             )
             .AllowAnyMethod()
             .AllowAnyHeader()
