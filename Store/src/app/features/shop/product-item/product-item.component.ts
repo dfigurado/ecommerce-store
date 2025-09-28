@@ -30,6 +30,6 @@ export class ProductItemComponent {
 
   onImageError(event: Event): void {
     const img = event.target as HTMLImageElement;
-    img.src = "/images/products/placeholder.png";
+    img.src = "/images/placeholder.png";
   }
 }
