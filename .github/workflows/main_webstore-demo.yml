@@ -34,7 +34,7 @@ jobs:
         run: |
           cd Store
           npm install
-          ng build --configuration Production
+          ng build --configuration production
           
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
