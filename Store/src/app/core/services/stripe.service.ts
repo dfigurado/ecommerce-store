@@ -110,7 +110,6 @@ export class StripeService {
     const stripe = await this.getStripeInstance()
     const elements = await this.initializeElements();
     const result = await elements.submit();
-
     if (result.error) throw new Error(result.error.message);
 
     const clientSecret = this.cartService.cart()?.clientSecret;
@@ -131,13 +130,16 @@ export class StripeService {
   createOrUpdatePaymentIntent() {
     const cart = this.cartService.cart();
     const hasClientSecret = !!cart?.clientSecret;
-
     if (!cart) throw new Error('Problem with cart');
     return this.http.post<Cart>(this.baseUrl + 'payments/' + cart.id, {}).pipe(
-      map(cart => {
-        this.cartService.setCart(cart);
+      map(async cart => {
+        if (!hasClientSecret) {
+          await firstValueFrom(this.cartService.setCart(cart));
+          return cart;
+        }
         return cart;
-    }))
+      })
+    )
   }
 
   disposeElements() {

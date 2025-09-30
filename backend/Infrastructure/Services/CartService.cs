@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Domain.Entities;
 using Domain.Interfaces;
 using StackExchange.Redis;
+using System.Text.Json;
 
 namespace Infrastructure.Services
 {
-    public class CartService(IConnectionMultiplexer redis) : ICartService
+    public class CartService(
+        IConnectionMultiplexer redis) : ICartService
     {
         private readonly IDatabase _db = redis.GetDatabase();
 

@@ -14,25 +14,25 @@
       <tbody class="divide-y divide-gray-200">
         @for (item of cartService.cart()?.items; track item.productId)
         {
-        <tr>
-          <td class="py-4">
-            <div class="flex items-center gap-4">
-              <img mat-card-image
-                   ngSrc="{{item.imageUrl}}"
-                   alt="{{item.productName}}"
-                   width="50"
-                   height="50"
-                   (error)="onImageError($event)" />
-              <span>{{item.productName}}</span>
-            </div>
-          </td>
-          <td class="p-4">
-            x{{item.quantity}}
-          </td>
-          <td class="p-4 text-right">
-            {{item.price | currency: 'GBP' : 'symbol-narrow' : '1.2-2'}}
-          </td>
-        </tr>
+          <tr>
+            <td class="py-4">
+              <div class="flex items-center gap-4">
+                <img mat-card-image
+                     ngSrc="{{item.imageUrl}}"
+                     alt="{{item.productName}}"
+                     width="50"
+                     height="50"
+                     (error)="onImageError($event)" />
+                <span>{{item.productName}}</span>
+              </div>
+            </td>
+            <td class="p-4">
+              x{{item.quantity}}
+            </td>
+            <td class="p-4 text-right">
+              {{item.price | currency: 'GBP' : 'symbol-narrow' : '1.2-2'}}
+            </td>
+          </tr>
         }
       </tbody>
     </table>

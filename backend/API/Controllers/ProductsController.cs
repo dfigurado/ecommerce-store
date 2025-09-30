@@ -8,18 +8,19 @@ namespace API.Controllers
 {
     public class ProductsController(IUnitOfWork unitOfWork) : BaseApiController
     {
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts([FromQuery]ProductSpecParams specParams)
         {
             var spec = new ProductSpecification(specParams);
-            return await CreatePageResult(unitOfWork.Repository<Product>(), spec, specParams.PageIndex, specParams.PageSize);
+            return await CreatePageResult(_unitOfWork.Repository<Product>(), spec, specParams.PageIndex, specParams.PageSize);
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            var product = await unitOfWork.Repository<Product>().GetByIdAsync(id);
+            var product = await _unitOfWork.Repository<Product>().GetByIdAsync(id);
 
             if (product == null) return NotFound();
 
@@ -29,9 +30,9 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> CreateProduct(Product product)
         {
-            unitOfWork.Repository<Product>().Add(product);
+            _unitOfWork.Repository<Product>().Add(product);
 
-            if (await unitOfWork.Complete())
+            if (await _unitOfWork.Complete())
             {
                 return CreatedAtAction("GetProduct", new { id = product.Id }, product);
             }
@@ -45,9 +46,9 @@ namespace API.Controllers
             if (product.Id != id || !ProductExists(id))
                 return BadRequest("Cannot update this product");
 
-            unitOfWork.Repository<Product>().Update(product);
+            _unitOfWork.Repository<Product>().Update(product);
 
-            if (await unitOfWork.Complete())
+            if (await _unitOfWork.Complete())
             {
                 return NoContent();
             }
@@ -58,13 +59,13 @@ namespace API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
-            var product = await unitOfWork.Repository<Product>().GetByIdAsync(id);
+            var product = await _unitOfWork.Repository<Product>().GetByIdAsync(id);
 
-            if (product == null) return NotFound(); 
+            if (product == null) return NotFound();
 
-            unitOfWork.Repository<Product>().Delete(product);
+            _unitOfWork.Repository<Product>().Delete(product);
 
-            if (await unitOfWork.Complete())
+            if (await _unitOfWork.Complete())
             {
                 return NoContent();
             }
@@ -76,14 +77,14 @@ namespace API.Controllers
         public async Task<ActionResult<IReadOnlyList<string>>> GetBrands()
         {
             var spec = new BrandListSpecification();
-            return Ok(await unitOfWork.Repository<Product>().ListAsync(spec));
+            return Ok(await _unitOfWork.Repository<Product>().ListAsync(spec));
         }
 
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<string>>> GetTypes()
         {
             var spec = new TypeListSpecification();
-            return Ok(await unitOfWork.Repository<Product>().ListAsync(spec));
+            return Ok(await _unitOfWork.Repository<Product>().ListAsync(spec));
         }
 
         private bool ProductExists(int id)

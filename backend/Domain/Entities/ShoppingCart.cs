@@ -13,5 +13,6 @@ namespace Domain.Entities
         public int? DeliveryMethodId { get; set; }
         public string? ClientSecret { get; set; }
         public string? PaymentIntentId { get; set; }
+        public StoreCoupon? Coupon { get; set; }
     }
 }

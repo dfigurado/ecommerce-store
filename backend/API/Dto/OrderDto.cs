@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Domain.Entities.OrderAggregate;
-using Stripe;
+﻿using Domain.Entities.OrderAggregate;
+using System.ComponentModel.DataAnnotations;
 
 namespace API.Dto
 {
@@ -14,5 +13,6 @@ namespace API.Dto
         public ShippingAddress ShippingAddress { get; set; } = null!;
         [Required]
         public PaymentSummary PaymentSummary { get; set; } = null!;
+        public decimal Discount { get; set; }
     }
 }

@@ -1,27 +1,36 @@
 using API.Middleware;
 using API.SignalR;
-using Infrastructure.Data;
+using Domain.Entities;
 using Domain.Interfaces;
+using Infrastructure.Common.Helper;
+using Infrastructure.Data;
 using Infrastructure.Repository;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
-using Infrastructure.Services;
-using Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// config auto-loads appsettings.{env}.json
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var redisString = builder.Configuration.GetConnectionString("Redis");
+var stripeSettings = builder.Configuration.GetSection("StripeSettings");
+
 builder.Services.AddControllers();
+
 // Add services to the container.
 builder.Services.AddDbContext<StoreContext>(opt =>
 {
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+     opt.UseSqlServer(connectionString);
 });
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICouponService, CouponService>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+builder.Services.Configure<StripeSettings>(stripeSettings);
 builder.Services.ConfigureApplicationCookie(opt =>
 {
     opt.Cookie.Name = ".AspNetCore.Identity.Application";
@@ -42,6 +51,7 @@ builder.Services.ConfigureApplicationCookie(opt =>
         return Task.CompletedTask;
     };
 });
+
 builder.Services.AddCors(option =>
 {
     option.AddPolicy("ShopCors", 
@@ -59,7 +69,7 @@ builder.Services.AddCors(option =>
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
 {
-    var connString = builder.Configuration.GetConnectionString("Redis")
+    var connString = redisString
         ?? throw new Exception("Cannot get redis connection string");
     var configuration = ConfigurationOptions.Parse(connString, true);
     return ConnectionMultiplexer.Connect(configuration);
@@ -73,7 +83,7 @@ builder.Services
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-//builder.Services.AddOpenApi();
+// builder.Services.AddOpenApi();
 
 var app = builder.Build();
 

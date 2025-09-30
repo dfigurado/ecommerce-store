@@ -5,9 +5,11 @@ using Domain.Entities;
 using Domain.Entities.OrderAggregate;
 using Domain.Interfaces;
 using Domain.Specifications;
+using Infrastructure.Common.Helper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Options;
 using Stripe;
 using Event = Stripe.Event;
 
@@ -16,17 +18,22 @@ namespace API.Controllers;
 public class PaymentsController(
     IPaymentService paymentService, 
     IUnitOfWork unitOfWork,
-    ILogger<PaymentsController> logger, 
-    IConfiguration config,
+    ILogger<PaymentsController> logger,
+    IOptions<StripeSettings> options,
     IHubContext<NotificationsHub> notificationHubContext): BaseApiController
 {
-    private readonly string _whSecret = config["StripeSettings:WhSecret"]!;
-    
+
+    private readonly IPaymentService _paymentService = paymentService;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
+    private readonly ILogger<PaymentsController> _logger = logger;
+    private readonly StripeSettings _stripeSettings = options.Value;
+    private readonly IHubContext<NotificationsHub> _notificationHubContext = notificationHubContext;
+
     [Authorize]
     [HttpPost("{cartId}")]
     public async Task<ActionResult<ShoppingCart>> CreateOrUpdatePaymentIntent(string cartId)
     {
-        var cart = await paymentService.CreateOrUpdatePaymentIntent(cartId);
+        var cart = await _paymentService.CreateOrUpdatePaymentIntent(cartId);
         
         if (cart == null) return BadRequest("Problem with your cart");
         
@@ -36,7 +43,7 @@ public class PaymentsController(
     [HttpGet("delivery-methods")]
     public async Task<ActionResult<IReadOnlyList<DeliveryMethod>>> GetDeliveryMethods()
     {
-        return Ok(await unitOfWork.Repository<DeliveryMethod>().GetAllAsync());
+        return Ok(await _unitOfWork.Repository<DeliveryMethod>().GetAllAsync());
     }
 
     [HttpPost("webhook")]
@@ -59,12 +66,12 @@ public class PaymentsController(
         }
         catch (StripeException ex)
         {
-            logger.LogError(ex, "Stripe exception occurred.");
+            _logger.LogError(ex, "Stripe exception occurred.");
             return StatusCode(StatusCodes.Status500InternalServerError, "Webhook error");
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "An Unexpected error occurred.");
+            _logger.LogError(ex, "An Unexpected error occurred.");
             return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred.");
         }
     }
@@ -73,7 +80,7 @@ public class PaymentsController(
     {
         if (intent.Status != "succeeded")
         {
-            logger.LogWarning("Payment intent {PaymentIntentId} has status {Status}, skipping processing", 
+            _logger.LogWarning("Payment intent {PaymentIntentId} has status {Status}, skipping processing", 
                 intent.Id, intent.Status);
             return;
         }
@@ -82,53 +89,46 @@ public class PaymentsController(
     
         if (order == null)
         {
-            logger.LogWarning("Order not found for payment intent {PaymentIntentId}. This could be a duplicate webhook or orphaned payment.", 
+            _logger.LogWarning("Order not found for payment intent {PaymentIntentId}. This could be a duplicate webhook or orphaned payment.", 
                 intent.Id);
             return; // Don't throw - webhook should still return 200 OK
         }
 
-        logger.LogInformation("Order {OrderId} payment completed successfully", order.Id);
+        _logger.LogInformation("Order {OrderId} payment completed successfully", order.Id);
 
         var connectionId = NotificationsHub.GetConnectionIdByEmail(order.BuyerEmail);
 
         if (!string.IsNullOrEmpty(connectionId))
         {
-            await notificationHubContext.Clients.Client(connectionId)
+            await _notificationHubContext.Clients.Client(connectionId)
                 .SendAsync("OrderCompletionNotification", order.ToDto());
-        
-            logger.LogInformation("Sent order completion notification to user {Email}", order.BuyerEmail);
+
+            _logger.LogInformation("Sent order completion notification to user {Email}", order.BuyerEmail);
         }
         else
         {
-            logger.LogInformation("No active connection found for user {Email}, notification not sent", order.BuyerEmail);
+            _logger.LogInformation("No active connection found for user {Email}, notification not sent", order.BuyerEmail);
         }
     }
 
     private async Task<Order?> UpdateOrderPaymentStatus(PaymentIntent intent)
     {
         var spec = new OrderSpecification(intent.Id, true);
-        var order = await unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
+        var order = await _unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
 
         if (order == null)
         {
-            logger.LogWarning("No order found for payment intent {PaymentIntentId}", intent.Id);
+            _logger.LogWarning("No order found for payment intent {PaymentIntentId}", intent.Id);
             return null;
         }
 
-        var oderTotalInCents = (long)Math.Round(order.Subtotal * 100, MidpointRounding.AwayFromZero);
+        var oderTotalInCents = (long)Math.Round(order.GetTotal() * 100, MidpointRounding.AwayFromZero);
 
-        if (oderTotalInCents != intent.Amount)
-        {
-            order.Status = OrderStatus.PaymentMismatch;
-        }
-        else
-        {
-            order.Status = OrderStatus.PaymentReceived;
-        }
+        order.Status = oderTotalInCents != intent.Amount ? OrderStatus.PaymentMismatch : OrderStatus.PaymentReceived;
 
-        await unitOfWork.Complete();
+        await _unitOfWork.Complete();
 
-        logger.LogInformation("Updated order {OrderId} status to {Status}", order.Id, order.Status);
+        _logger.LogInformation("Updated order {OrderId} status to {Status}", order.Id, order.Status);
 
         return order;
     }
@@ -137,12 +137,12 @@ public class PaymentsController(
     {
         try
         {
-            var ent = EventUtility.ConstructEvent(json, Request.Headers["Stripe-Signature"], _whSecret);
+            var ent = EventUtility.ConstructEvent(json, Request.Headers["Stripe-Signature"], _stripeSettings.WhSecret);
             return ent;
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Failed to construct stripe event.");
+            _logger.LogError(ex, "Failed to construct stripe event.");
             throw new StripeException("Invalid signature");
         }
     }

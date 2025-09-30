@@ -12,6 +12,7 @@ export interface IOrder {
   paymentSummary: IPaymentSummary,
   orderItems: IOrderItem[],
   subtotal: number,
+  discount?:number,
   total: number,
   orderStatus: string,
   paymentIntentId: string

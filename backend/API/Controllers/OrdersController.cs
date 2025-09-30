@@ -11,13 +11,19 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers;
 
 [Authorize]
-public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork) : BaseApiController
+public class OrdersController(
+    ICartService cartService, 
+    IUnitOfWork unitOfWork) : BaseApiController
 {
+
+    private readonly ICartService _cartService = cartService;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
+
     [HttpPost]
     public async Task<ActionResult<Order>> CreateOrder(OrderDto orderDto)
     {
         var email = HttpContext.User.GetEmail();
-        var cart = await cartService.GetCartAsync(orderDto.CartId);
+        var cart = await _cartService.GetCartAsync(orderDto.CartId);
         
         if (cart == null) return BadRequest("Cart not found");
         if (cart.PaymentIntentId == null) return BadRequest("No payment intent found");
@@ -26,7 +32,7 @@ public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork) 
 
         foreach (var item in cart.Items!)
         {
-            var productItem = await unitOfWork.Repository<Domain.Entities.Product>().GetByIdAsync(item.ProductId);
+            var productItem = await _unitOfWork.Repository<Domain.Entities.Product>().GetByIdAsync(item.ProductId);
 
              if (productItem == null) return BadRequest("Product not found");
 
@@ -47,7 +53,7 @@ public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork) 
              items.Add(orderItem);
         }
         
-        var deliveryMethod = await unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(orderDto.DeliveryMethodId);
+        var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(orderDto.DeliveryMethodId);
 
         if (deliveryMethod == null) return BadRequest("Delivery method not found");
 
@@ -57,8 +63,9 @@ public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork) 
             DeliveryMethod = deliveryMethod,
             ShippingAddress = orderDto.ShippingAddress,
             Subtotal = items.Sum(x => x.UnitPrice * x.Quantity),
-            PaymentIntentId = cart.PaymentIntentId,
+            Discount = orderDto.Discount,
             PaymentSummary = orderDto.PaymentSummary,
+            PaymentIntentId = cart.PaymentIntentId,
             BuyerEmail = email
         };
 
@@ -76,7 +83,7 @@ public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork) 
     public async Task<ActionResult<IReadOnlyList<GetOrderDto>>> GetOrdersForUser()
     {
         var spec = new OrderSpecification(HttpContext.User.GetEmail());
-        var orders = await unitOfWork.Repository<Order>().ListAsync(spec);
+        var orders = await _unitOfWork.Repository<Order>().ListAsync(spec);
         var ordersToReturn = orders.Select(order => order.ToDto()).ToList();
         
         return Ok(ordersToReturn);
@@ -86,7 +93,7 @@ public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork) 
     public async Task<ActionResult<GetOrderDto>> GetOrder(int id)
     {
         var spec = new OrderSpecification(HttpContext.User.GetEmail(), id);
-        var order = await unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
+        var order = await _unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
         
         if (order == null) return NotFound();
         
@@ -97,17 +104,17 @@ public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork) 
     public async Task<ActionResult<IReadOnlyList<GetOrderDto>>> DeleteOrder(int id)
     {
         var spec = new OrderSpecification(HttpContext.User.GetEmail(), id);
-        var result = await unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
+        var result = await _unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
         
         if (result == null) return NotFound();
-        
-        unitOfWork.Repository<Order>().Delete(result);
 
-        if (!await unitOfWork.Complete()) return BadRequest("Failed to delete order");
+        _unitOfWork.Repository<Order>().Delete(result);
+
+        if (!await _unitOfWork.Complete()) return BadRequest("Failed to delete order");
         
         // Retrieve a new list of orders after deletion
         var specTwo = new OrderSpecification(HttpContext.User.GetEmail());
-        var orders = await unitOfWork.Repository<Order>().ListAsync(specTwo);
+        var orders = await _unitOfWork.Repository<Order>().ListAsync(specTwo);
         var ordersToReturn = orders.Select(order => order.ToDto()).ToList();
 
         return Ok(ordersToReturn);
