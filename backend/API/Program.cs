@@ -12,7 +12,7 @@ using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// config auto-loads appsettings.{env}.json
+// config auto-loads app-settings.{env}.json
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 var redisString = builder.Configuration.GetConnectionString("Redis");
 var stripeSettings = builder.Configuration.GetSection("StripeSettings");
