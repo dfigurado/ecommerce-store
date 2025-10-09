@@ -29,7 +29,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       }
 
       if (err.status === 403) {
-        snackbar.error(err.error.title || err.error);
+        snackbar.error('Forbidden');
       }
 
       if (err.status === 404) {

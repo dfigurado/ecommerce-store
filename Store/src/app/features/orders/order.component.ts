@@ -15,6 +15,7 @@ import { IOrder } from '../../shared/models/order/iorder';
     MatButtonModule,
     MatIconModule
   ],
+  standalone: true,
   templateUrl: './order.component.html',
   styleUrl: './order.component.scss'
 })

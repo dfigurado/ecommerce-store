@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
 import { OrderService } from '../../../core/services/order.service';
 import { SignalrService } from '../../../core/services/signalr.service';
 import { AddressPipe } from '../../../shared/pipes/address-pipe';
-import { PaymenCardtPipe } from '../../../shared/pipes/payment-pipe';
+import { PaymentCardPipe } from '../../../shared/pipes/payment-pipe';
 
 @Component({
   selector: 'app-checkout-success',
@@ -17,7 +17,7 @@ import { PaymenCardtPipe } from '../../../shared/pipes/payment-pipe';
     DatePipe,
     AddressPipe,
     CurrencyPipe,
-    PaymenCardtPipe,
+    PaymentCardPipe,
   ],
   templateUrl: './checkout-success.component.html',
   styleUrl: './checkout-success.component.scss'

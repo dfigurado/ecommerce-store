@@ -1,0 +1,90 @@
+// Custom animations and transitions
+.group:hover .transform {
+  transform: scale(1.05);
+}
+
+// Custom button hover effects
+.mat-mdc-raised-button {
+  transition: all 0.3s ease;
+}
+
+.mat-mdc-raised-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+// Newsletter input focus styles
+input[type="email"]:focus {
+  transform: scale(1.02);
+  transition: transform 0.2s ease;
+}
+
+// Smooth scroll behavior
+html {
+  scroll-behavior: smooth;
+}
+
+// Custom gradient overlay for hero section
+.hero-overlay {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.8) 0%, rgba(16, 185, 129, 0.8) 100%);
+}
+
+// Stats counter animation (you can add JavaScript for counting effect)
+.stats-number {
+  font-variant-numeric: tabular-nums;
+}
+
+// Category card hover effects
+.category-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.category-card:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+// Material icon sizing consistency
+.mat-icon {
+  font-size: inherit;
+  width: auto;
+  height: auto;
+}
+
+// Newsletter section responsiveness
+@media (max-width: 640px) {
+  .newsletter-form {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .newsletter-input {
+    width: 100%;
+  }
+}
+
+// Feature cards subtle animation
+.feature-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+}
+
+// Custom scrollbar (webkit browsers)
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+}

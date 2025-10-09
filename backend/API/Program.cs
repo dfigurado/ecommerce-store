@@ -75,11 +75,12 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
     return ConnectionMultiplexer.Connect(configuration);
 });
 builder.Services.AddSingleton<ICartService, CartService>();
+
 builder.Services.AddAuthorization();
-builder.Services
-    .AddIdentityApiEndpoints<AppUser>()
-    .AddApiEndpoints()
+builder.Services.AddIdentityApiEndpoints<AppUser>()
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<StoreContext>();
+
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -105,14 +106,18 @@ app.MapFallbackToController("Index", "Fallback");
 try
 {
     using var scope = app.Services.CreateScope();
+
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<StoreContext>();
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+
     await context.Database.MigrateAsync();
-    await StoreContextSeed.SeedAsync(context);
+    await StoreContextSeed.SeedAsync(context, userManager);
 }
 catch (Exception ex)
 {
     Console.WriteLine(ex);
+    throw;
 }
 
 app.Run();

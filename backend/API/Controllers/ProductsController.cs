@@ -2,6 +2,7 @@ using API.Controllers.Base;
 using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Specifications;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -12,7 +13,7 @@ namespace API.Controllers
         public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts([FromQuery]ProductSpecParams specParams)
         {
             var spec = new ProductSpecification(specParams);
-            return await CreatePageResult(unitOfWork.Repository<Product>(), spec, specParams.PageIndex, specParams.PageSize);
+            return await CreatePagedResult(unitOfWork.Repository<Product>(), spec, specParams.PageIndex, specParams.PageSize);
         }
 
         [HttpGet("{id:int}")]
@@ -25,6 +26,7 @@ namespace API.Controllers
             return product;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Product>> CreateProduct(Product product)
         {
@@ -38,6 +40,7 @@ namespace API.Controllers
             return BadRequest("Failed to create product");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id:int}")]
         public async Task<ActionResult> UpdateProduct(int id, Product product)
         {
@@ -54,6 +57,7 @@ namespace API.Controllers
             return BadRequest("Failed to update product");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {

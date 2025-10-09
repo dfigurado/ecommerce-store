@@ -8,5 +8,6 @@ public enum OrderStatus
     Shipped,
     Delivered,
     Cancelled,
-    PaymentMismatch
+    PaymentMismatch,
+    Refunded
 }

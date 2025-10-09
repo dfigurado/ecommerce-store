@@ -9,7 +9,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AccountService } from '../../core/services/account.service';
 import { CartService } from '../../core/services/cart.service';
 import { LoadingService } from '../../core/services/loading.service';
-
+import { IsAdminDirective } from '../../shared/directives/is-admin.directive';
 
 @Component({
   selector: 'app-header',
@@ -23,15 +23,17 @@ import { LoadingService } from '../../core/services/loading.service';
     MatMenuTrigger,
     MatMenu,
     MatDivider,
-    MatMenuItem
+    MatMenuItem,
+    IsAdminDirective
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  loadingService = inject(LoadingService);
   cartService = inject(CartService);
+  loadingService = inject(LoadingService);
   accountService = inject(AccountService);
+
   private router = inject(Router);
 
   logout() {

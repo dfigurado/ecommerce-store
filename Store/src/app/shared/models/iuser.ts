@@ -5,4 +5,5 @@ export interface IUser {
   lastName: string;
   email: string;
   address: IAddress;
+  roles: string | string[];
 }

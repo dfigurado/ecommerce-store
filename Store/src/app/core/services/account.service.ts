@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal, computed } from '@angular/core';
 import { map, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { IAddress } from '../../shared/models/iaddress';
@@ -13,7 +13,13 @@ export class AccountService {
   baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
   private signalRService = inject(SignalrService);
+
   currentUser = signal<IUser | null>(null);
+
+  isAdmin = computed(() => {
+    const roles = this.currentUser()?.roles;
+    return Array.isArray(roles) ? roles.includes('Admin') : roles === 'Admin';
+  });
 
   login(values: any) {
     let params = new HttpParams();

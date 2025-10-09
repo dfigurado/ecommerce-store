@@ -7,7 +7,7 @@ import { IPaymentSummary } from '../models/order/ipaymentsummary';
   standalone: true
 })
 
-export class PaymenCardtPipe implements PipeTransform {
+export class PaymentCardPipe implements PipeTransform {
 
   transform(value?: ConfirmationToken['payment_method_preview'] | IPaymentSummary, ...args: unknown[]): unknown {
     if (value && 'card' in value) {

@@ -4,7 +4,7 @@ import { MatCardImage } from '@angular/material/card';
 import { ConfirmationToken } from '@stripe/stripe-js';
 import { CartService } from '../../../core/services/cart.service';
 import { AddressPipe } from '../../../shared/pipes/address-pipe';
-import { PaymenCardtPipe } from '../../../shared/pipes/payment-pipe';
+import { PaymentCardPipe } from '../../../shared/pipes/payment-pipe';
 
 @Component({
   selector: 'app-checkout-review',
@@ -13,7 +13,7 @@ import { PaymenCardtPipe } from '../../../shared/pipes/payment-pipe';
     MatCardImage,
     NgOptimizedImage,
     AddressPipe,
-    PaymenCardtPipe
+    PaymentCardPipe
   ],
   templateUrl: './checkout-review.component.html',
   styleUrl: './checkout-review.component.scss'

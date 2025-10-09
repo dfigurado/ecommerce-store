@@ -1,20 +1,181 @@
-<div class="max-w-screen-2xl mx-auto px-4 mt-32">
-  <div class="flex flex-col items-center py-16 justify-center mt-20 rounded-2xl
-      shadow-xl relative">
-    <img class="absolute inset-0 w-full h-full object-cover rounded-2xl"
-         src="../images/hero1.jpg"
-         alt=""
-    />
-    <div class="flex flex-col p-8 rounded-2xl items-center relative">
-      <h1 class="my-6 font-extrabold text-white text-6xl">
+<div class="mx-auto mt-20 max-w-screen-2xl px-4">
+  <!-- Hero Section -->
+  <div class="relative flex flex-col items-center justify-center overflow-hidden rounded-2xl py-20 shadow-2xl">
+    <img class="absolute inset-0 h-full w-full rounded-2xl object-cover"
+         src="/images/hero1.jpg" alt="Web Store" />
+    <div class="relative z-10 flex flex-col items-center rounded-2xl p-8">
+      <h1 class="my-6 text-center text-6xl leading-tight font-extrabold text-white">
         Welcome to SkiNet!
       </h1>
-      <button mat-button class="bg-gradient-to-r from-blue-600 to-cyan-500 font-semibold text-2xl
-              text-white rounded-2xl px-8 py-4 border-2 border-trasparent mt-8"
-              routerLink="/shop"
-       >
-         Go to shop
-      </button>
+      <p class="mb-8 max-w-2xl text-center text-xl text-white">
+        Discover amazing products at unbeatable prices. Shop with confidence and enjoy fast, free shipping.
+      </p>
+      <div class="flex gap-4">
+        <button mat-raised-button class="transform rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500
+                px-8 py-4 text-xl font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:from-blue-700 hover:to-cyan-600"
+                routerLink="/shop">
+          Shop Now
+        </button>
+        <button mat-stroked-button class="rounded-lg border-white px-8 py-4 text-xl
+                font-semibold text-white transition-all duration-300 hover:bg-white hover:text-gray-900">
+          Learn More
+        </button>
+      </div>
     </div>
   </div>
+
+  <!-- Features Section -->
+  <section class="mx-auto max-w-screen-2xl px-4 py-16">
+    <div class="mb-12 text-center">
+      <h2 class="mb-4 text-4xl font-bold text-gray-900">Why Choose SkiNet?</h2>
+      <p class="mx-auto max-w-2xl text-xl text-gray-600">
+        We're committed to providing you with the best shopping experience possible.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+      <!-- Feature 1 -->
+      <div class="rounded-xl p-6 text-center transition-shadow duration-300 hover:shadow-lg">
+        <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
+          <mat-icon class="text-3xl text-blue-600">local_shipping</mat-icon>
+        </div>
+        <h3 class="mb-2 text-xl font-semibold text-gray-900">Free Shipping</h3>
+        <p class="text-gray-600">Free shipping on orders over $50. Fast and reliable delivery to your doorstep.</p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="rounded-xl p-6 text-center transition-shadow duration-300 hover:shadow-lg">
+        <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+          <mat-icon class="text-3xl text-green-600">security</mat-icon>
+        </div>
+        <h3 class="mb-2 text-xl font-semibold text-gray-900">Secure Payment</h3>
+        <p class="text-gray-600">Your payment information is encrypted and secure with our advanced security measures.</p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="rounded-xl p-6 text-center transition-shadow duration-300 hover:shadow-lg">
+        <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-purple-100">
+          <mat-icon class="text-3xl text-purple-600">support_agent</mat-icon>
+        </div>
+        <h3 class="mb-2 text-xl font-semibold text-gray-900">24/7 Support</h3>
+        <p class="text-gray-600">Our customer support team is available around the clock to help you with any questions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Categories Section -->
+  <section class="bg-gray-50 py-16">
+    <div class="mx-auto max-w-screen-2xl px-4">
+      <div class="mb-12 text-center">
+        <h2 class="mb-4 text-4xl font-bold text-gray-900">Popular Categories</h2>
+        <p class="text-xl text-gray-600">Explore our most loved product categories</p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <!-- Category 1 -->
+        <div class="group cursor-pointer" routerLink="/shop">
+          <div class="relative transform overflow-hidden rounded-xl shadow-md transition-all duration-300 group-hover:scale-105 hover:shadow-xl">
+            <div class="flex h-48 items-center justify-center bg-gradient-to-br from-blue-400 to-blue-600">
+              <mat-icon class="text-6xl text-white">laptop</mat-icon>
+            </div>
+            <div class="bg-white p-4">
+              <h3 class="text-lg font-semibold text-gray-900">Electronics</h3>
+              <p class="text-sm text-gray-600">Latest gadgets & tech</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 2 -->
+        <div class="group cursor-pointer" routerLink="/shop">
+          <div class="relative transform overflow-hidden rounded-xl shadow-md transition-all duration-300 group-hover:scale-105 hover:shadow-xl">
+            <div class="flex h-48 items-center justify-center bg-gradient-to-br from-pink-400 to-pink-600">
+              <mat-icon class="text-6xl text-white">checkroom</mat-icon>
+            </div>
+            <div class="bg-white p-4">
+              <h3 class="text-lg font-semibold text-gray-900">Fashion</h3>
+              <p class="text-sm text-gray-600">Trendy clothes & accessories</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 3 -->
+        <div class="group cursor-pointer" routerLink="/shop">
+          <div class="relative transform overflow-hidden rounded-xl shadow-md transition-all duration-300 group-hover:scale-105 hover:shadow-xl">
+            <div class="flex h-48 items-center justify-center bg-gradient-to-br from-green-400 to-green-600">
+              <mat-icon class="text-6xl text-white">home</mat-icon>
+            </div>
+            <div class="bg-white p-4">
+              <h3 class="text-lg font-semibold text-gray-900">Home & Garden</h3>
+              <p class="text-sm text-gray-600">Furniture & decor</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 4 -->
+        <div class="group cursor-pointer" routerLink="/shop">
+          <div class="relative transform overflow-hidden rounded-xl shadow-md transition-all duration-300 group-hover:scale-105 hover:shadow-xl">
+            <div class="flex h-48 items-center justify-center bg-gradient-to-br from-orange-400 to-orange-600">
+              <mat-icon class="text-6xl text-white">sports_basketball</mat-icon>
+            </div>
+            <div class="bg-white p-4">
+              <h3 class="text-lg font-semibold text-gray-900">Sports</h3>
+              <p class="text-sm text-gray-600">Equipment & activewear</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="bg-gradient-to-r from-blue-600 to-purple-600 py-16">
+    <div class="mx-auto max-w-screen-2xl px-4">
+      <div class="text-center">
+        <h2 class="mb-4 text-4xl font-bold text-white">Stay Updated</h2>
+        <p class="mx-auto mb-8 max-w-2xl text-xl text-blue-100">
+          Subscribe to our newsletter and be the first to know about new products, sales, and exclusive offers.
+        </p>
+
+        <div class="mx-auto flex max-w-md flex-col items-center justify-center gap-4 sm:flex-row">
+          <input type="email"
+                 placeholder="Enter your email"
+                 class="w-full flex-1 rounded-lg border-0 px-4 py-3 text-gray-900 focus:ring-2 focus:ring-white focus:outline-none sm:w-auto">
+          <button mat-raised-button class="rounded-lg bg-white px-8 py-3 font-semibold whitespace-nowrap text-blue-600 transition-colors duration-300 hover:bg-gray-100">
+            Subscribe
+          </button>
+        </div>
+
+        <p class="mt-4 text-sm text-blue-100">
+          No spam, unsubscribe at any time.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="bg-white py-16">
+    <div class="mx-auto max-w-screen-2xl px-4">
+      <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
+        <div class="text-center">
+          <div class="mb-2 text-4xl font-bold text-blue-600">10K+</div>
+          <div class="text-gray-600">Happy Customers</div>
+        </div>
+
+        <div class="text-center">
+          <div class="mb-2 text-4xl font-bold text-green-600">50K+</div>
+          <div class="text-gray-600">Products Sold</div>
+        </div>
+
+        <div class="text-center">
+          <div class="mb-2 text-4xl font-bold text-purple-600">99%</div>
+          <div class="text-gray-600">Customer Satisfaction</div>
+        </div>
+
+        <div class="text-center">
+          <div class="mb-2 text-4xl font-bold text-orange-600">24/7</div>
+          <div class="text-gray-600">Customer Support</div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>

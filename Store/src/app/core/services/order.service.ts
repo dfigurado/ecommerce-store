@@ -15,13 +15,20 @@ export class OrderService {
   createOrder(orderToCreate: IOrderToCreate) {
     return this.http.post<IOrder>(this.baseUrl + 'orders', orderToCreate)
   }
+
   getOrdersForUser() {
     return this.http.get<IOrder[]>(this.baseUrl + 'orders');
   }
+
   getOrderById(id: number) {
     return this.http.get<IOrder>(this.baseUrl + 'orders/' + id);
   }
+
   deleteOrder(id: number) {
     return this.http.delete<IOrder[]>(this.baseUrl + 'orders/' + id);
+  }
+
+  getOrderDetailed(id: number) {
+    return this.http.get<IOrder>(this.baseUrl + 'order/' + id);
   }
 }
