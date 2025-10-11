@@ -4,13 +4,14 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { IOrder } from '../../shared/models/order/iorder';
 import { AdminService } from '../../core/services/admin.service';
 import { OrderParams } from '../../shared/models/order/orderparams';
-import { MatIcon } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { MatLabel, MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DialogService } from '../../core/services/dialog.service';
 import { RouterLink } from '@angular/router';
+import {MatIconButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-admin',
@@ -18,14 +19,15 @@ import { RouterLink } from '@angular/router';
   imports: [
     MatTableModule,
     MatPaginatorModule,
-    MatIcon,
+    MatIconModule,
     MatSelectModule,
     DatePipe,
     CurrencyPipe,
     MatLabel,
     MatTooltipModule,
     MatTabsModule,
-    RouterLink
+    RouterLink,
+    MatIconButton
   ],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
@@ -75,7 +77,8 @@ export class AdminComponent implements OnInit {
     const confirm = await this.dialogService.confirm(
       'Confirm refund',
       'Are you sure want to issue this refund? This cannot be undone'
-    )
+    );
+    if (confirm) this.refundOrder(id);
   }
 
   refundOrder(id: number) {

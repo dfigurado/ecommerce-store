@@ -1,4 +1,5 @@
 using API.Controllers.Base;
+using API.Helpers;
 using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Specifications;
@@ -9,13 +10,16 @@ namespace API.Controllers
 {
     public class ProductsController(IUnitOfWork unitOfWork) : BaseApiController
     {
+        [Cache(600)]
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts([FromQuery]ProductSpecParams specParams)
+        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts(
+            [FromQuery]ProductSpecParams specParams)
         {
             var spec = new ProductSpecification(specParams);
             return await CreatePagedResult(unitOfWork.Repository<Product>(), spec, specParams.PageIndex, specParams.PageSize);
         }
 
+        [Cache(600)]
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
@@ -26,6 +30,7 @@ namespace API.Controllers
             return product;
         }
 
+        [InvalidateCache("api/products|")]
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Product>> CreateProduct(Product product)
@@ -75,6 +80,7 @@ namespace API.Controllers
             return BadRequest("Failed to delete product");
         }
 
+        [Cache(10000)]
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<string>>> GetBrands()
         {
@@ -82,6 +88,7 @@ namespace API.Controllers
             return Ok(await unitOfWork.Repository<Product>().ListAsync(spec));
         }
 
+        [Cache(10000)]
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<string>>> GetTypes()
         {

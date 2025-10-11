@@ -51,21 +51,11 @@
               <th mat-header-cell *matHeaderCellDef>Actions</th>
               <td mat-cell *matCellDef="let order">
                 <div class="flex gap-2">
-                  <button
-                    matToolTip="View"
-                    mat-icon-button
-                    routerLink="/orders/{{ order.id }}"
-                    class="text-blue-800"
-                  >
+                  <button matTooltip="View" mat-icon-button routerLink="/orders/{{ order.id }}" class="text-blue-800">
                     <mat-icon color="accent">visibility</mat-icon>
                   </button>
-                  <button
-                    matToolTip="Refund"
-                    [disabled]="order.status === 'Refunded'"
-                    (click)="openConfirmDialog(order.id)"
-                    mat-icon-button
-                    class="text-red-800"
-                  >
+                  <button matTooltip="Refund" mat-icon-button [disabled]="order.status === 'Refunded'"
+                          (click)="openConfirmDialog(order.id)" class="text-red-800">
                     <mat-icon color="warn">undo</mat-icon>
                   </button>
                 </div>
