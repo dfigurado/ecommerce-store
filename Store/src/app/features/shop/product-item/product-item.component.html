@@ -7,13 +7,14 @@
           height="768"
           alt="{{product.name}}"
           (error)="onImageError($event)"
+          aria-label="product image"
         >
       <mat-card-content class="mt-2">
-        <h2 class="text-sm font-semibold uppercase">{{product.name}}</h2>
-        <p class="font-light">{{product.price | currency: 'GBP' : 'symbol-narrow' : '1.2-2'}}</p>
+        <h2 class="text-sm font-semibold uppercase" aria-label="product name">{{product.name}}</h2>
+        <p class="font-light" aria-label="product price">{{product.price | currency: 'GBP' : 'symbol-narrow' : '1.2-2'}}</p>
       </mat-card-content>
       <mat-card-actions (click)="$event.stopPropagation()">
-        <button mat-stroked-button class="w-full" (click)="cartService.addItemToCart(product)">
+        <button mat-stroked-button class="w-full" (click)="cartService.addItemToCart(product)" aria-label="add to cart">
           <mat-icon>add_shopping_cart</mat-icon>
           Add to cart
         </button>
