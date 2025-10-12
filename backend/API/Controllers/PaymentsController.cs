@@ -124,7 +124,9 @@ public class PaymentsController(
 
         var oderTotalInCents = (long)Math.Round(order.GetTotal() * 100, MidpointRounding.AwayFromZero);
 
-        order.Status = oderTotalInCents != intent.Amount ? OrderStatus.PaymentMismatch : OrderStatus.PaymentReceived;
+        order.Status = oderTotalInCents != intent.Amount 
+            ? OrderStatus.PaymentMismatch 
+            : OrderStatus.PaymentReceived;
 
         await _unitOfWork.Complete();
 

@@ -10,14 +10,16 @@ namespace Infrastructure.Services
     {
         private readonly ICartService _cartService;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly StripeSettings _stripeSettings;
 
-        public PaymentService(ICartService cartService, IUnitOfWork unitOfWork, IOptions<StripeSettings> options)
+        public PaymentService(
+            ICartService cartService, 
+            IUnitOfWork unitOfWork, 
+            IOptions<StripeSettings> options)
         {
             _cartService = cartService;
             _unitOfWork = unitOfWork;
-            _stripeSettings = options.Value;
-            StripeConfiguration.ApiKey = _stripeSettings.SecretKey;
+            var stripeSettings = options.Value;
+            StripeConfiguration.ApiKey = stripeSettings.SecretKey;
         }
 
         public async Task<ShoppingCart?> CreateOrUpdatePaymentIntent(string cartId)
@@ -59,7 +61,7 @@ namespace Infrastructure.Services
             return result.Status;
         }
 
-        private async Task CreateUpdatePaymentIntentAsync(ShoppingCart cart, long total)
+        private static async Task CreateUpdatePaymentIntentAsync(ShoppingCart cart, long total)
         {
             var service = new PaymentIntentService();
 
@@ -85,7 +87,7 @@ namespace Infrastructure.Services
             }
         }
 
-        private async Task<long> ApplyDiscountAsync(StoreCoupon storeCoupon, long amount)
+        private static async Task<long> ApplyDiscountAsync(StoreCoupon storeCoupon, long amount)
         {
             var couponService = new Stripe.CouponService();
 
@@ -104,7 +106,7 @@ namespace Infrastructure.Services
             return amount;
         }
 
-        private long CalculateSubtotal(ShoppingCart cart)
+        private static long CalculateSubtotal(ShoppingCart cart)
         {
             var itemTotal = cart.Items!.Sum(x => x.Quantity * x.Price * 100);
             return (long)itemTotal;
